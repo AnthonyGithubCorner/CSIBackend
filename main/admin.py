@@ -14,3 +14,5 @@ class PatientAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Patient, PatientAdmin)
+admin.site.register(NewsArticle)
+admin.site.register(ScientificArticles)

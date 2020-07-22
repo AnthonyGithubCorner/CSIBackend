@@ -23,9 +23,10 @@ class Patient(models.Model):
         ('BLOOD', "Antibody Testing"),
         ('SWAB', 'Neonatal Nasopharyngeal Swabs'),
     ]
-    status = models.CharField(
+    tested = models.CharField(
         max_length=10,
         choices=TESTED_CHOICES,
+        default='BLOOD',
     )
 
     def __str__(self):
