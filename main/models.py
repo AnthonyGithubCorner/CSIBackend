@@ -19,5 +19,32 @@ class Patient(models.Model):
         default='NA',
     )
 
+    TESTED_CHOICES = [
+        ('BLOOD', "Antibody Testing"),
+        ('SWAB', 'Neonatal Nasopharyngeal Swabs'),
+    ]
+    status = models.CharField(
+        max_length=10,
+        choices=TESTED_CHOICES,
+    )
+
     def __str__(self):
         return self.user.get_full_name()
+
+
+class ScientificArticles(models.Model):
+    title = models.CharField(max_length=100)
+    text = models.TextField()
+    date = models.DateField()
+    author = models.CharField(max_length=100)
+    publication = models.CharField(max_length=100)
+
+
+class NewsArticle(models.Model):
+    title = models.CharField(max_length=100)
+    headline = models.CharField(max_length=1000)
+    image = models.FileField()
+    text = models.TextField()
+    date = models.DateField()
+    author = models.CharField(max_length=100)
+    website = models.CharField(max_length=100)
