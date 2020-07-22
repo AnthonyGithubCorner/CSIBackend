@@ -33,7 +33,7 @@ class Patient(models.Model):
         return self.user.get_full_name()
 
 
-class ScientificArticles(models.Model):
+class ScientificArticle(models.Model):
     title = models.CharField(max_length=100)
     text = models.TextField()
     date = models.DateField()
