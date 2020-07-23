@@ -6,6 +6,7 @@ from main.models import *
 
 class CovidTestInline(admin.TabularInline):
     model = CovidTest
+    extra = 0
 
 class PatientAdmin(admin.ModelAdmin):
     inlines = [
