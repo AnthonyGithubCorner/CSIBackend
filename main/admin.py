@@ -4,8 +4,15 @@ from django.contrib.auth.models import User
 
 from main.models import *
 
+class CovidTestInline(admin.TabularInline):
+    model = CovidTest
 
-admin.site.register(Patient)
+class PatientAdmin(admin.ModelAdmin):
+    inlines = [
+        CovidTestInline,
+    ]
+
+admin.site.register(Patient, PatientAdmin)
 admin.site.register(CovidTest)
 admin.site.register(NewsArticle)
 admin.site.register(ScientificArticle)

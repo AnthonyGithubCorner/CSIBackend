@@ -4,62 +4,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class CovidTest(models.Model):
-    TYPE_CHOICES = [
-        ('ANTIBODY', "Antibody Testing"),
-        ('ANTIGEN', 'Antigen Testing'),
-    ]
-    RESULT_CHOICES = [
-        ('UNKNOWN', 'Unknown'),
-        ('NEGATIVE', 'Negative'),
-        ('POSITIVE', 'Positive'),
-    ]
-    HOSPITALIZATION_CHOICES = [
-        ('YES', "Yes"),
-        ('NO', 'No'),
-    ]
-    VENTILATION_CHOICES = [
-        ('YES', "Yes"),
-        ('NO', 'No'),
-    ]
-    INTERVENTION_CHOICES = [
-        ('YES', "Yes"),
-        ('NO', 'No'),
-    ]
-    MEDICATION_CHOICES = [
-        ('HCQ', "Hydroxychloroquine"),
-    ]
-    Date = models.DateField()
-    type = models.CharField(
-        max_length=10,
-        choices=TYPE_CHOICES,
-        default='ANTIBODY',
-    )
-    results = models.CharField(
-        max_length=10,
-        choices=RESULT_CHOICES,
-        default='UNKNOWN',
-    )
-    hospitalization = models.CharField(
-        max_length=10,
-        choices=HOSPITALIZATION_CHOICES,
-        default='NO',
-    )
-    ventilation = models.CharField(
-        max_length=10,
-        choices=VENTILATION_CHOICES,
-        default='NO',
-    )
-    medication = models.CharField(
-        max_length=10,
-        choices=MEDICATION_CHOICES,
-        default='HCQ',
-    )
 
 
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    covidTests = models.ForeignKey(CovidTest, on_delete=models.CASCADE)
     SMOKING_CHOICES = [
         ('CURRENT', "Current Smoker"),
         ('FORMER', 'Former Smoker'),
@@ -153,8 +101,64 @@ class Patient(models.Model):
     )
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.user
 
+
+class CovidTest(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    TYPE_CHOICES = [
+        ('ANTIBODY', "Antibody Testing"),
+        ('ANTIGEN', 'Antigen Testing'),
+    ]
+    RESULT_CHOICES = [
+        ('UNKNOWN', 'Unknown'),
+        ('NEGATIVE', 'Negative'),
+        ('POSITIVE', 'Positive'),
+    ]
+    HOSPITALIZATION_CHOICES = [
+        ('YES', "Yes"),
+        ('NO', 'No'),
+    ]
+    VENTILATION_CHOICES = [
+        ('YES', "Yes"),
+        ('NO', 'No'),
+    ]
+    INTERVENTION_CHOICES = [
+        ('YES', "Yes"),
+        ('NO', 'No'),
+    ]
+    MEDICATION_CHOICES = [
+        ('HCQ', "Hydroxychloroquine"),
+    ]
+    Date = models.DateField()
+    type = models.CharField(
+        max_length=10,
+        choices=TYPE_CHOICES,
+        default='ANTIBODY',
+    )
+    results = models.CharField(
+        max_length=10,
+        choices=RESULT_CHOICES,
+        default='UNKNOWN',
+    )
+    hospitalization = models.CharField(
+        max_length=10,
+        choices=HOSPITALIZATION_CHOICES,
+        default='NO',
+    )
+    ventilation = models.CharField(
+        max_length=10,
+        choices=VENTILATION_CHOICES,
+        default='NO',
+    )
+    medication = models.CharField(
+        max_length=10,
+        choices=MEDICATION_CHOICES,
+        default='HCQ',
+    )
+
+    def __str__(self):
+        return self.patient.user.get_full_name()
 
 class ScientificArticle(models.Model):
     title = models.CharField(max_length=100)
