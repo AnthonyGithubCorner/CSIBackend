@@ -59,7 +59,7 @@ class CovidTest(models.Model):
 
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    covidTests = models.ForeignKey(CovidTest, on_delete=models.CASCADE)
+    # covidTests = models.ForeignKey(CovidTest, on_delete=models.CASCADE)
     SMOKING_CHOICES = [
         ('CURRENT', "Current Smoker"),
         ('FORMER', 'Former Smoker'),
