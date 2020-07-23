@@ -15,9 +15,9 @@ class Patient(models.Model):
     ]
 
     ALCOHOL_CHOICES = [
-        ('CURRENT', "Current Smoker"),
-        ('FORMER', 'Former Smoker'),
-        ('NEGATIVE', 'Never Smoker'),
+        ('CURRENT', "Current Drinker"),
+        ('FORMER', 'Former Drinker'),
+        ('NEGATIVE', 'Never Drank'),
     ]
     HOUSING_CHOICES = [
         ('ALONE', "Live Alone"),
