@@ -101,7 +101,7 @@ class Patient(models.Model):
     )
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 class CovidTest(models.Model):
@@ -158,7 +158,7 @@ class CovidTest(models.Model):
     )
 
     def __str__(self):
-        return self.patient.user.get_full_name()
+        return self.patient.user.username
 
 class ScientificArticle(models.Model):
     title = models.CharField(max_length=100)
