@@ -175,8 +175,8 @@ class NewsArticle(models.Model):
     website = models.CharField(max_length=100)
 
 
-class Point(models.Model):
-    point = gis_models.PointField()
+# class Point(models.Model):
+#     point = gis_models.PointField()
 
 
 # class ClinicalTrials(models.Model):
