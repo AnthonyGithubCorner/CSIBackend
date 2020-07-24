@@ -16,7 +16,7 @@ class PatientAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(Point, admin.GeoModelAdmin)
+
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(CovidTest)
 admin.site.register(NewsArticle)
