@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #for geo
     'django.contrib.gis',
     'rest_framework',
     'corsheaders',

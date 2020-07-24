@@ -1,9 +1,6 @@
 from django.db import models
-
-from django.db import models
 from django.contrib.auth.models import User
-
-
+from django.contrib.gis.db import models as gis_models
 
 
 class Patient(models.Model):
@@ -176,6 +173,11 @@ class NewsArticle(models.Model):
     date = models.DateField()
     author = models.CharField(max_length=100)
     website = models.CharField(max_length=100)
+
+
+class Point(models.Model):
+    point = gis_models.PointField()
+
 
 # class ClinicalTrials(models.Model):
 #     What they are searching for'
