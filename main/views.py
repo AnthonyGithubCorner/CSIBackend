@@ -61,6 +61,6 @@ def closest(request, pk):
     with urllib.request.urlopen("http://maps.googleapis.com/maps/api/geocode/json?address=google") as url:
         data = json.loads(url.read().decode())
 
-        return Response(data={{data}}, status=status.HTTP_200_OK)
+        return Response(data={{data}:"help"}, status=status.HTTP_200_OK)
 
 
