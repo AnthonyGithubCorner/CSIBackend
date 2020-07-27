@@ -17,6 +17,7 @@ import requests
 from .serializers import *
 from django.http import JsonResponse
 import urllib.request
+import json
 
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
 
@@ -57,6 +58,9 @@ def closest(request, pk):
     qs = Point.objects.filter(point__distance_lte=(pnt, D(km=rg)))
     outcome = "OBJECTID,ID,NAME"
     x = f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json"
-    response = urllib.request.urlopen(x)
-    return JsonResponse(response, safe=False)
+    with urllib.request.urlopen("http://maps.googleapis.com/maps/api/geocode/json?address=google") as url:
+        data = json.loads(url.read().decode())
+
+        return Response(data={{data}}, status=status.HTTP_200_OK)
+
 
