@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.gis.db import models as gis_models
 
 
 class Patient(models.Model):
@@ -19,9 +20,10 @@ class Patient(models.Model):
         ('ALONE', "Live Alone"),
         ('GROUP', 'Live With Others'),
     ]
-    MARTIAL_CHOICES = [
+    MARITAL_CHOICES = [
         ('SINGLE', "Single"),
         ('MARRIED', 'Married'),
+        ('OTHER', 'Other'),
     ]
     INSURANCE_CHOICES = [
         ('UNINSURED', "UnInsured"),
@@ -29,7 +31,7 @@ class Patient(models.Model):
     ]
     EMPLOYMENT_CHOICES = [
         ('EMPLOYED', "Employed"),
-        ('UNEMPLOYED', 'UnEmployed'),
+        ('UNEMPLOYED', 'Unemployed'),
     ]
     DIET_CHOICES = [
         ('VEGAN', "Vegan"),
@@ -38,18 +40,16 @@ class Patient(models.Model):
     ]
     VETERAN_CHOICES = [
         ('NOT', 'Not A Veteran'),
-        ('FORMER', "Former Veteran"),
-        ('CURRENT', 'Current Veteran'),
+        ('VETERAN', 'Veteran'),
     ]
     DISABILITIES_CHOICES = [
         ('DISABLE', 'Disabled'),
         ('ABLE', "Able"),
     ]
 
-    age = models.IntegerField(default=69,)
+    age = models.IntegerField(default=20,)
     height = models.IntegerField()
     weight = models.IntegerField()
-
     smoking = models.CharField(
         max_length=10,
         choices=SMOKING_CHOICES,
@@ -65,9 +65,9 @@ class Patient(models.Model):
         choices=HOUSING_CHOICES,
         default='ALONE',
     )
-    martial = models.CharField(
+    marital = models.CharField(
         max_length=10,
-        choices=MARTIAL_CHOICES,
+        choices=MARITAL_CHOICES,
         default='ALONE',
     )
     insurance = models.CharField(
@@ -148,7 +148,7 @@ class CovidTest(models.Model):
         default='NO',
     )
     medication = models.CharField(
-        max_length=10,
+        max_length=30,
         choices=MEDICATION_CHOICES,
         default='HCQ',
     )
@@ -174,8 +174,9 @@ class NewsArticle(models.Model):
     website = models.CharField(max_length=100)
 
 
-# class Point(models.Model):
-#     point = gis_models.PointField()
+class Point(models.Model):
+    name = models.CharField(max_length=100)
+    point = gis_models.PointField()
 
 
 # class ClinicalTrials(models.Model):
