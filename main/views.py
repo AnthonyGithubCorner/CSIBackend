@@ -7,7 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-
+from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.measure import D
 
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Patient
@@ -42,5 +43,13 @@ def users_detail(request, pk):
 @api_view(['GET'])
 def loginView(request):
     return Response(data={"Test":"Login"}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def closest(request, range):
+    pnt = GEOSGeometry('POINT(-96.876369 29.905320)')
+    qs = Point.objects.filter(point__distance_lte=(pnt, D(km=range)))
+    return Response(data={qs}, status=status.HTTP_200_OK)
+
+
 
 
