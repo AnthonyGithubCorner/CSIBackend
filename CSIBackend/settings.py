@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django.contrib.gis',
-    'main'
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -157,3 +157,4 @@ GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 
 django_heroku.settings(locals())
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
