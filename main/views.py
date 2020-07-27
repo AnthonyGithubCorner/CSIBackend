@@ -9,11 +9,11 @@ from rest_framework import status
 from rest_framework import generics
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D
-
+from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Patient
 from django.contrib.auth.models import User
-
+import requests
 from .serializers import *
 
 class UserList(generics.ListCreateAPIView):
@@ -51,3 +51,14 @@ def closest(request, pk):
     rg = user.patient.searchRange
     qs = Point.objects.filter(point__distance_lte=(pnt, D(km=rg)))
     return Response(data={qs}, status=status.HTTP_200_OK)
+
+def home(request):
+    ip_address = request.META.get('HTTP_X_FORWARDED_FOR', '')
+    response = requests.get('http://extreme-ip-lookup.com/json/%s' % ip_address)
+    geodata = response.json()
+    return render(request, 'test.html', {
+        'ip': ip_address,
+        'country': geodata['country'],
+        'latitude': geodata['lat'],
+        'longitude': geodata['lon'],
+    })

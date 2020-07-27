@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/users/<int:pk>/', views.users_detail),
     path('api/hello/', views.loginView),
     path('api/closest/<int:pk>/', views.closest),
+    path('test', views.home),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
