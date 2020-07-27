@@ -58,7 +58,7 @@ def closest(request, pk):
     qs = Point.objects.filter(point__distance_lte=(pnt, D(km=rg)))
     outcome = "OBJECTID,ID,NAME"
     x = f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json"
-    with urllib.request.urlopen("http://maps.googleapis.com/maps/api/geocode/json?address=google") as url:
+    with urllib.request.urlopen(x) as url:
         data = json.loads(url.read().decode())
 
         return Response(data={{data}:"help"}, status=status.HTTP_200_OK)
