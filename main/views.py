@@ -57,7 +57,7 @@ def closest(request, pk):
     qs = Point.objects.filter(point__distance_lte=(pnt, D(km=rg)))
     outcome = "OBJECTID,ID,NAME"
 
-    return f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json"
+    return Response(f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json")
 
 
 
