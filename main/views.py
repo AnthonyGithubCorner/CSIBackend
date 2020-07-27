@@ -16,7 +16,7 @@ from django.contrib.auth.models import User
 import requests
 from .serializers import *
 from django.http import JsonResponse
-
+import urllib.request
 
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
 
@@ -56,6 +56,7 @@ def closest(request, pk):
     rg = user.patient.searchRange
     qs = Point.objects.filter(point__distance_lte=(pnt, D(km=rg)))
     outcome = "OBJECTID,ID,NAME"
-
-    return JsonResponse(f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json")
+    x = f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json"
+    response = urllib.request.urlopen(x)
+    return JsonResponse(response)
 
