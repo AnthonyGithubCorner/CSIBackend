@@ -45,11 +45,9 @@ def loginView(request):
     return Response(data={"Test":"Login"}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-def closest(request, range):
-    pnt = GEOSGeometry('POINT(-96.876369 29.905320)')
-    qs = Point.objects.filter(point__distance_lte=(pnt, D(km=range)))
+def closest(request, pk):
+    user = User.objects.get(pk=pk)
+    pnt = user.patient.location
+    rg = user.patient.searchRange
+    qs = Point.objects.filter(point__distance_lte=(pnt, D(km=rg)))
     return Response(data={qs}, status=status.HTTP_200_OK)
-
-
-
-

@@ -11,7 +11,7 @@ urlpatterns = [
     path('api/users/',  views.UserList.as_view()),
     path('api/users/<int:pk>/', views.users_detail),
     path('api/hello/', views.loginView),
-    path('api/closest/<int:range>/', views.closest),
+    path('api/closest/<int:pk>/', views.closest),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

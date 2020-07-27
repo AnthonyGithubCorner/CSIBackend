@@ -96,6 +96,9 @@ class Patient(models.Model):
         default='ABLE',
     )
 
+    location = gis_models.PointField()
+    searchRange = models.IntegerField()
+
     def __str__(self):
         return self.user.username
 
