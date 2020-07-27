@@ -16,6 +16,11 @@ from django.contrib.auth.models import User
 import requests
 from .serializers import *
 
+
+
+HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
+
+
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -50,15 +55,9 @@ def closest(request, pk):
     pnt = user.patient.location
     rg = user.patient.searchRange
     qs = Point.objects.filter(point__distance_lte=(pnt, D(km=rg)))
-    return Response(data={qs}, status=status.HTTP_200_OK)
+    outcome = "OBJECTID,ID,NAME"
 
-def home(request):
-    ip_address = request.META.get('HTTP_X_FORWARDED_FOR', '')
-    response = requests.get('http://extreme-ip-lookup.com/json/%s' % ip_address)
-    geodata = response.json()
-    return render(request, 'test.html', {
-        'ip': ip_address,
-        'country': geodata['country'],
-        'latitude': geodata['lat'],
-        'longitude': geodata['lon'],
-    })
+    return f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json"
+
+
+
