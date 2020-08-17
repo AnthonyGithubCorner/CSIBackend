@@ -25,12 +25,16 @@ HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/servic
 
 
 class UserLoginView(RetrieveAPIView):
-    queryset = User.objects.all()
+
     permission_classes = (AllowAny,)
     serializer_class = UserLoginSerializer
 
     def post(request, pk):
-        user = User.objects.get(pk=pk)
+        try:
+            queryset = User.objects.all()
+            user = queryset.get(pk=pk)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = user.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         response = {
