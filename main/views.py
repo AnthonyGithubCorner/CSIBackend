@@ -20,6 +20,7 @@ import urllib.request
 import json
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
 
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
 
