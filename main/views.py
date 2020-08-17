@@ -24,24 +24,20 @@ from rest_framework.generics import RetrieveAPIView
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
 
 
-class UserLoginView(RetrieveAPIView):
-    queryset = User.objects.all()
-    permission_classes = (AllowAny,)
-    serializer_class = UserLoginSerializer
-    ordering_fields = ['username', 'email', 'id']
+@api_view(['POST'])
+def user_login(request):
+    serializer = UserLoginSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    response = {
+        'success' : 'True',
+        'status code' : status.HTTP_200_OK,
+        'message': 'User logged in  successfully',
+        'token' : serializer.data['token'],
+        }
+    status_code = status.HTTP_200_OK
 
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        response = {
-            'success' : 'True',
-            'status code' : status.HTTP_200_OK,
-            'message': 'User logged in  successfully',
-            'token' : serializer.data['token'],
-            }
-        status_code = status.HTTP_200_OK
+    return Response(response, status=status_code)
 
-        return Response(response, status=status_code)
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
