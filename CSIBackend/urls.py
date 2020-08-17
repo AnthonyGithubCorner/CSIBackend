@@ -12,6 +12,8 @@ urlpatterns = [
     path('api/users/<int:pk>/', views.users_detail),
     path('api/hello/', views.loginView),
     path('api/closest/<int:pk>/', views.closest),
+    path('token/obtain/', views.UserLoginSerializer.as_view()),
+    # path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     # path('test', views.home),
 ]
 

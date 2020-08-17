@@ -50,6 +50,7 @@ class Patient(models.Model):
     age = models.IntegerField(default=20,)
     height = models.IntegerField()
     weight = models.IntegerField()
+    BMI = models.FloatField(default=(weight^2/height))
     smoking = models.CharField(
         max_length=10,
         choices=SMOKING_CHOICES,

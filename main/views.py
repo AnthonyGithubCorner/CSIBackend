@@ -18,9 +18,29 @@ from .serializers import *
 from django.http import JsonResponse
 import urllib.request
 import json
+from rest_framework.permissions import AllowAny
+from rest_framework.generics import RetrieveAPIView
 
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
 
+
+class UserLoginView(RetrieveAPIView):
+
+    permission_classes = (AllowAny,)
+    serializer_class = UserLoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        response = {
+            'success' : 'True',
+            'status code' : status.HTTP_200_OK,
+            'message': 'User logged in  successfully',
+            'token' : serializer.data['token'],
+            }
+        status_code = status.HTTP_200_OK
+
+        return Response(response, status=status_code)
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
