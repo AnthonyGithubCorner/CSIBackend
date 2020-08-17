@@ -25,7 +25,7 @@ HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/servic
 
 
 class UserLoginView(RetrieveAPIView):
-
+    queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = UserLoginSerializer
 
