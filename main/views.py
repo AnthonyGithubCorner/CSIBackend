@@ -29,8 +29,9 @@ class UserLoginView(RetrieveAPIView):
     permission_classes = (AllowAny,)
     serializer_class = UserLoginSerializer
 
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
+    def post(request, pk):
+        user = User.objects.get(pk=pk)
+        serializer = user.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         response = {
             'success' : 'True',
