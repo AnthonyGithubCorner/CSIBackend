@@ -11,6 +11,8 @@ urlpatterns = [
     path('api/', include('main.urls')),
     path('api/users/',  views.UserList.as_view()),
     path('api/users/<int:pk>/', views.users_detail),
+    # path('api/users/',  views.UserList.as_view()),
+    path('api/patients/<int:pk>/', views.patient_detail),
     path('api/hello/', views.loginView),
     path('api/closest/<int:pk>/', views.closest),
     path('token/obtain/', obtain_auth_token),
