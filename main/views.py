@@ -81,6 +81,10 @@ def patient_detail(request, pk):
         patient.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class PatientList(generics.ListCreateAPIView):
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    ordering_fields = ['age']
 
 @api_view(['GET'])
 def loginView(request):

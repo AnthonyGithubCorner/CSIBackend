@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/users/',  views.UserList.as_view()),
     path('api/users/<int:pk>/', views.users_detail),
     # path('api/users/',  views.UserList.as_view()),
+    path('api/patients/', views.PatientList.as_view()),
     path('api/patients/<int:pk>/', views.patient_detail),
     path('api/hello/', views.loginView),
     path('api/closest/<int:pk>/', views.closest),
