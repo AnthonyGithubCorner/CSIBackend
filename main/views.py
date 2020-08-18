@@ -65,8 +65,7 @@ def users_detail(request, pk):
 
 def patient_detail(request, pk):
     try:
-        user = User.objects.get(pk=pk)
-        patient = Patient.objects.get(user=user)
+        patient = Patient.objects.get(pk=pk)
     except patient.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
