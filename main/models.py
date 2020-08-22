@@ -46,6 +46,20 @@ class Patient(models.Model):
         ('DISABLE', 'Disabled'),
         ('ABLE', "Able"),
     ]
+    GENDER_CHOICES = [
+        ('FEMALE', 'Female'),
+        ('MALE', "Male"),
+        ('OTHER', "Other"),
+        ('PREFER NOT TO DISCLOSE', "Prefer Not To Disclose"),
+    ]
+    GIVEN_BIRTH_CHOICES = [
+        ('YES', 'Yes'),
+        ('NO', "No"),
+    ]
+    EXERCISE_CHOICES = [
+        ('YES', 'Yes'),
+        ('NO', "No"),
+    ]
 
     age = models.IntegerField(default=20,)
     height = models.IntegerField()
@@ -95,7 +109,36 @@ class Patient(models.Model):
         choices=DISABILITIES_CHOICES,
         default='ABLE',
     )
-
+    dateEnrolled = models.DateField()
+    firstName = models.TextField()
+    lastName = models.TextField()
+    street = models.TextField()
+    city = models.TextField()
+    state = models.TextField()
+    zipCode = models.PositiveIntegerField()
+    phoneNumber = models.IntegerField()
+    email = models.TextField(help_text="Enter in correct format abc@email.com")
+    dateOfBirth = models.DateField()
+    ethnicity = models.TextField()
+    race = models.TextField()
+    gender = models.CharField(
+        max_length=10,
+        choices=GENDER_CHOICES,
+        default='OTHER',
+    )
+    givenBirth = models.CharField(
+        max_length=10,
+        choices=GIVEN_BIRTH_CHOICES,
+        default='NO',
+    )
+    timesBirth = models.PositiveIntegerField()
+    exercise = models.CharField(
+        max_length=10,
+        choices=EXERCISE_CHOICES,
+        default='NO',
+    )
+    allergies = models.TextField()
+    userComment = models.CharField(max_length=1000)
     location = gis_models.PointField()
     searchRange = models.IntegerField()
 
@@ -127,7 +170,29 @@ class CovidTest(models.Model):
         ('NO', 'No'),
     ]
     MEDICATION_CHOICES = [
-        ('HCQ', "Hydroxychloroquine"),
+        ('REMDESIVIR', "Remdesivir"),
+        ('DEXAMETHASONE', 'Dexamethasone'),
+        ('HYDROXYCHLOROQUINE', 'Hydroxychloroquine'),
+        ('AZITHROMYCIN', 'Azithromycin'),
+        ('CONVALESCENT PLASMA', 'Convalescent plasma'),
+        ('ACTEMRA', "Actemra"),
+        ('KALETRA', 'Kaletra'),
+        ('TAMIFLU', 'Tamiflu'),
+        ('AVIGAN', 'Avigan'),
+        ('COLCRYS', 'Colcrys'),
+        ('IVERMECTIN', 'Ivermectin'),
+    ]
+    STATUS_CHOICES = [
+        ('CURRENTLY POSITIVE', "Currently Positive"),
+        ('CURRENTLY NEGATIVE', 'Currently Negative'),
+        ('CURRENTLY NEGATIVE, WAS POSITIVE', 'Currently Negative, Was Positive'),
+        ('NOT TESTED', 'Not tested'),
+        ('PREFER NOT TO TELL', 'Prefer not to tell'),
+    ]
+    OTHER_INTERVENTION_CHOICES = [
+    ('BEHAVIOR', 'Behavior'),
+    ('NUTRITION', 'Nutrition'),
+    ('OTHERS', 'Others'),
     ]
     Date = models.DateField()
     type = models.CharField(
@@ -151,13 +216,31 @@ class CovidTest(models.Model):
         default='NO',
     )
     medication = models.CharField(
-        max_length=30,
+        max_length=60,
         choices=MEDICATION_CHOICES,
-        default='HCQ',
+        default='OTHERS',
     )
+    covidStatus = models.CharField(
+        max_length=50,
+        choices=STATUS_CHOICES,
+        default='NONE',
+    )
+    otherIntervention = models.CharField(
+        max_length=10,
+        choices=OTHER_INTERVENTION_CHOICES,
+        default='NONE',
+    )
+    covidMedicineOthers = models.CharField(max_length=200)
+    behaviorIntervention = models.CharField(max_length=1000)
+    nutritionIntervention = models.CharField(max_length=1000)
+    dateDischarge = models.DateField()
+    dateLatestVisit = models.DateField(),
+    dateRecovery = models.DateField()
 
-    def __str__(self):
-        return self.patient.user.username
+
+def __str__(self):
+    return self.patient.user.username
+
 
 class ScientificArticle(models.Model):
     title = models.CharField(max_length=100)
@@ -182,9 +265,186 @@ class Point(models.Model):
     point = gis_models.PointField()
 
 
+class MedicalPhenotype(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    PROBLEM_CHOICES = [
+        ('CARDIOVASCULAR DISEASE', "Cardiovascular Disease"),
+        ('NEUROLOGICAL DISEASE', 'Neurological Disease'),
+        ('CANCER', 'Cancer'),
+        ('RESPIRATORY DISEASE', 'Respiratory Disease'),
+        ('METABOLIC DISEASE', 'Metabolic Disease'),
+        ('IMMUNOLOGICAL DISEASE', 'Immunological Disease'),
+        ('HEMATOLOGICAL DISEASE', 'Hematological Disease'),
+        ('MENTAL DISEASE', 'Mental Disease'),
+        ('INFECTIOUS DISEASE', 'Infectious Disease'),
+        ('GASTROINTESTINAL DISEASE', 'Gastrointestinal Disease'),
+        ('ENDOCRINE SYSTEM DISEASE', 'Endocrine System Disease'),
+        ('REPRODUCTIVE SYSTEM DISEASE', 'Reproductive System Disease'),
+        ('URINARY SYSTEM DISEASE', 'Urinary System Disease'),
+        ('GENETIC DISEASE', 'Genetic Disease'),
+        ('SYNDROME', 'Syndrome'),
+        ('OTHERS', 'Others'),
+    ]
+    VACCINATION_LIST_CHOICES = [
+        ('INFLUENZA', "Influenza"),
+        ('TD', 'Td'),
+        ('HEP B', 'Hep B'),
+        ('MENINGOCOCCAL MCV4P', 'Meningococcal MCV4P'),
+        ('HEP A', 'Hep A'),
+        ('PNEUMOCOCCAL CONJUGATE PCV 13', 'Pneumococcal conjugate PCV 13'),
+        ('ZOSTER', 'Zoster'),
+        ('PNEUMOCOCCAL POLYSACCHARIDE', 'Pneumococcal Polysaccharide'),
+        ('VALENT', 'Valent'),
+        ('HIB', 'Hib'),
+        ('IPV', 'IPV'),
+        ('VARICELLA', 'varicella'),
+        ('MMR', 'MMR'),
+        ('TDAP', 'Tdap'),
+        ('HPV', 'HPV'),
+        ('HEP A', 'Hep A'),
+        ('DTAP', 'DTaP'),
+    ]
+    problem = models.CharField(
+        max_length=60,
+        choices=PROBLEM_CHOICES,
+        default='NONE',
+    )
+    cardioDisease = models.CharField(max_length=1000)
+    cardioMedication = models.CharField(max_length=1000)
+    neurologicalInfo = models.CharField(max_length=1000)
+    neurologicalMedication = models.CharField(max_length=1000)
+    medicationList = models.CharField(max_length=1000)
+    vaccinationList = models.CharField(
+        max_length=200,
+        choices=VACCINATION_LIST_CHOICES,
+        default='OTHER',
+    )
+
+
+class Sensors(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    USING_SENSORS_CHOICES = [
+        ('YES', "Yes"),
+        ('NO', 'No'),
+    ]
+    REASON_USING_CHOICES = [
+        ('SYMPTOM MANAGEMENT DOCTOR REQUIREMENT', "Symptom Management Doctor Requirement"),
+        ('TREATMENT DOCTOR REQUIREMENT', 'Treatment Doctor Requirement'),
+        ('SYMPTOM MANAGEMENT PERSONAL INTEREST', "Symptom Management Personal Interest"),
+        ('TREATMENT PERSONAL INTEREST', 'Treatment Personal Interest'),
+        ('DAILY ACTIVITY MANAGEMENT', "Daily Activity Management"),
+        ('EDUCATION', 'Education'),
+        ('OTHER', 'Other'),
+    ]
+    SHARE_DATA_CHOICES = [
+        ('YES', "Yes"),
+        ('NO', 'No'),
+    ]
+    usingSensors = models.CharField(
+        max_length=10,
+        choices=USING_SENSORS_CHOICES,
+        default='NO',
+    )
+    reasonUsing = models.CharField(
+        max_length=100,
+        choices=REASON_USING_CHOICES,
+        default='OTHER',
+    )
+    moreInformation = models.CharField(max_length=1000)
+    brandName = models.CharField(max_length=1000)
+    sharingData = models.CharField(
+        max_length=10,
+        choices=SHARE_DATA_CHOICES,
+        default='NO',
+    )
+
+class Insurance(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    INSURANCE_TYPE_CHOICES = [
+        ('MEDICARE', "Medicare"),
+        ('MEDICAID', 'Medicaid'),
+        ('PRIVATE HEALTH PROGRAMS', 'Private Health Programs'),
+        ('OTHER', 'Other'),
+        ('NONE', 'None'),
+    ]
+    INSURANCE_PLAN_CHOICES = [
+        ('HMO', "HMO"),
+        ('PPO', 'PPO'),
+        ('EPO', 'EPO'),
+        ('POS', 'POS'),
+        ('HDHP', 'HDHO'),
+        ('NONE', 'None'),
+    ]
+    CARE_PLAN_CHOICES = [
+        ('DIABETES CARE PLAN', "Diabetes care plan"),
+        ('ALLERGIC DISORDER MONITORING', 'Allergic disorder monitoring'),
+        ('ANTI-SUICIDE PSYCHOTHERAPY', 'Anti-suicide psychotherapy'),
+        ('ASTHMA SELF MANAGEMENT', 'Asthma self management'),
+        ('BURN CARE', 'Burn care'),
+        ('CANCER CARE PLAN', 'Cancer care plan'),
+        ('CHRONIC OBSTRUCTIVE PULMONARY DISEASE', 'Chronic obstructive pulmonary disease '),
+        ('DEMENTIA MANAGEMENT', 'Dementia management'),
+        ('DIABETES SELF MANAGEMENT PLAN', 'Diabetes self management plan'),
+        ('DIALYSIS CARE PLAN', 'Dialysis care plan'),
+        ('FRACTURE CARE', 'Fracture care'),
+        ('HEAD INJURY REHABILITATION', 'Head injury rehabilitation'),
+        ('HEART FAILURE SELF MANAGEMENT PLAN', 'Heart failure self management plan'),
+        ('HYPERLIPIDEMIA CLINICAL MANAGEMENT PLAN', 'Hyperlipidemia clinical management plan'),
+        ('INFECTIOUS DISEASE CARE PLAN', 'Infectious disease care plan'),
+        ('INPATIENT CARE PLAN', 'Inpatient care plan'),
+        ('LIFESTYLE EDUCATION REGARDING HYPERTENSION', 'Lifestyle education regarding hypertension'),
+        ('MAJOR DEPRESSIVE DISORDER CLINICAL MANAGEMENT PLAN','Major depressive disorder clinical management plan'),
+        ('MAJOR SURGERY CARE MANAGEMENT', 'Major surgery care management'),
+        ('MENTAL HEALTH CARE PLAN', 'Mental health care plan'),
+        ('MINOR SURGERY CARE MANAGEMENT', 'Minor surgery care management'),
+        ('MUSCULOSKELETAL CARE', 'Musculoskeletal care'),
+        ('OVERACTIVITY/INATTENTION BEHAVIOR MANAGEMENT', 'Overactivity/inattention behavior management'),
+        ('PHYSICAL THERAPY PROCEDURE', 'Physical therapy procedure'),
+        ('POSTOPERATIVE CARE', 'Postoperative care'),
+        ('PSYCHIATRY CARE PLAN', 'Psychiatry care plan'),
+        ('RESPIRATORY THERAPY', 'Respiratory therapy'),
+        ('ROUTINE ANTENATAL CARE', 'Routine antenatal care'),
+        ('SELF-CARE INTERVENTIONS', 'Self-care interventions'),
+        ('SKIN CONDITION CARE', 'Skin condition care'),
+        ('SPINAL CORD INJURY REHABILITATION', 'Spinal cord injury rehabilitation'),
+        ('TERMINAL CARE', 'Terminal care'),
+        ('URINARY TRACT INFECTION CARE', 'Urinary tract infection care'),
+        ('WOUND CARE', 'Wound care'),
+        ('OTHER', 'Other'),
+    ]
+    HEALTH_INSURANCE_CHOICES = [
+        ('YES', "Yes"),
+        ('NO', 'No'),
+    ]
+    dateEnrolled = models.DateField()
+    insuranceType = models.CharField(
+        max_length=100,
+        choices=INSURANCE_TYPE_CHOICES,
+        default='NONE',
+    )
+    insuranceBrand = models.TextField()
+    insurancePlan = models.CharField(
+        max_length=100,
+        choices=INSURANCE_PLAN_CHOICES,
+        default='NONE',
+    )
+    carePlan = models.CharField(
+        max_length=200,
+        choices=CARE_PLAN_CHOICES,
+        default='NONE',
+    )
+    carePlanOther = models.TextField()
+    annualMedicalBill = models.TextField()
+    annualInsuranceBill = models.TextField()
+    healthInsurance = models.CharField(
+        max_length=10,
+        choices=HEALTH_INSURANCE_CHOICES,
+        default='NO',
+    )
+    userComment = models.CharField(max_length=1000)
+
+
 # class ClinicalTrials(models.Model):
 #     What they are searching for'
 #
 #     location = models.geolocation()
-
-
