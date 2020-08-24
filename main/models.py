@@ -25,10 +25,6 @@ class Patient(models.Model):
         ('MARRIED', 'Married'),
         ('OTHER', 'Other'),
     ]
-    INSURANCE_CHOICES = [
-        ('UNINSURED', "UnInsured"),
-        ('INSURED', 'Insured'),
-    ]
     EMPLOYMENT_CHOICES = [
         ('EMPLOYED', "Employed"),
         ('UNEMPLOYED', 'Unemployed'),
@@ -84,11 +80,6 @@ class Patient(models.Model):
         choices=MARITAL_CHOICES,
         default='ALONE',
     )
-    insurance = models.CharField(
-        max_length=10,
-        choices=INSURANCE_CHOICES,
-        default='UNINSURED',
-    )
     employment = models.CharField(
         max_length=10,
         choices=EMPLOYMENT_CHOICES,
@@ -122,7 +113,7 @@ class Patient(models.Model):
     ethnicity = models.TextField()
     race = models.TextField()
     gender = models.CharField(
-        max_length=10,
+        max_length=25,
         choices=GENDER_CHOICES,
         default='OTHER',
     )
@@ -236,10 +227,6 @@ class CovidTest(models.Model):
     dateDischarge = models.DateField()
     dateLatestVisit = models.DateField(),
     dateRecovery = models.DateField()
-
-
-def __str__(self):
-    return self.patient.user.username
 
 
 class ScientificArticle(models.Model):

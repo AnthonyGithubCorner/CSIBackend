@@ -6,15 +6,17 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework_jwt.settings import api_settings
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'date_joined')
+        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'date_joined')
+
 
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ('pk', 'user_id', 'age', 'height', 'weight')
+        fields = ('age', 'height', 'weight')
 
 
 JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
