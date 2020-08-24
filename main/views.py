@@ -64,7 +64,7 @@ def users_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['PUT', 'DELETE', 'POST'])
 def patient_detail(request, pk):
     try:
         patient = Patient.objects.get(pk=pk)
