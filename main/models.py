@@ -109,7 +109,7 @@ class Patient(models.Model):
     # city = models.TextField()
     # state = models.TextField()
     # zipCode = models.PositiveIntegerField()
-    phoneNumber = models.IntegerField(1111111111)
+    phoneNumber = models.IntegerField(default=1111111111)
     email = models.TextField(default="abc@email.com", help_text="Enter in correct format abc@email.com")
     dateOfBirth = models.DateField(default=timezone.now)
     ethnicity = models.TextField(default="Not Reported")
