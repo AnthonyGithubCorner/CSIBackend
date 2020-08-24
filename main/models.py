@@ -5,7 +5,7 @@ from django.contrib.gis.geos import Point
 from django.utils import timezone
 
 class Patient(models.Model):
-    userTransferID=models.IntegerField()
+    userTransferID=models.IntegerField(default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     SMOKING_CHOICES = [
         ('CURRENT', "Current Smoker"),
