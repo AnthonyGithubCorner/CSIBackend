@@ -64,14 +64,14 @@ def users_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['PUT', 'DELETE', 'POST'])
+@api_view(['DELETE', 'POST'])
 def patient_detail(request, pk):
     try:
         patient = Patient.objects.get(pk=pk)
     except Patient.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'PUT':
+    if request.method == 'POST':
         serializer = PatientSerializer(patient, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save(user=User.objects.get(id=pk))
