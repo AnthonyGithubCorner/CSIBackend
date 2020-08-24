@@ -18,11 +18,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PatientSerializer(serializers.ModelSerializer):
-    user_id = serializers.Field(source='get_absolute_url')
+    user_id = serializers.ReadOnlyField(source='get_absolute_url')
     class Meta:
         model = Patient
         fields = ('user_id', 'age', 'height', 'weight')
-        read_only_fields = ['user_id']
 
     def create(self, validated_data):
         pk = validated_data.pop('user_id')
