@@ -22,6 +22,7 @@ class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
         fields = ('user_id', 'age', 'height', 'weight')
+        read_only_fields = ['user_id']
 
     def create(self, validated_data):
         pk = validated_data.pop('user_id')
