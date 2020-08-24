@@ -74,7 +74,7 @@ def patient_detail(request, pk):
     if request.method == 'PUT':
         serializer = PatientSerializer(patient, data=request.data, context={'request': request})
         if serializer.is_valid():
-            serializer.save(user=User.objects.get(id=pk))
+            serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
