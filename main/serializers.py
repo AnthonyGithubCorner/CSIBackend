@@ -20,10 +20,10 @@ class UserSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ('user.id', 'age', 'height', 'weight')
+        fields = ('id', 'age', 'height', 'weight')
 
     def create(self, validated_data):
-        pk = validated_data.pop('user.id')
+        pk = validated_data.pop('id')
         return Patient.objects.create(user=User.objects.get(id=pk), **validated_data)
 
 
