@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models as gis_models
 from django.contrib.gis.geos import Point
+from django.utils import timezone
 
 class Patient(models.Model):
     userTransferID=models.IntegerField()
@@ -101,18 +102,18 @@ class Patient(models.Model):
         choices=DISABILITIES_CHOICES,
         default='ABLE',
     )
-    dateEnrolled = models.DateField()
-    firstName = models.TextField()
-    lastName = models.TextField()
+    dateEnrolled = models.DateField(default=timezone.now)
+    firstName = models.TextField(default="John")
+    lastName = models.TextField(default="Smith")
     # street = models.TextField()
     # city = models.TextField()
     # state = models.TextField()
     # zipCode = models.PositiveIntegerField()
-    phoneNumber = models.IntegerField()
-    email = models.TextField(help_text="Enter in correct format abc@email.com")
-    dateOfBirth = models.DateField()
-    ethnicity = models.TextField()
-    race = models.TextField()
+    phoneNumber = models.IntegerField(1111111111)
+    email = models.TextField(default="abc@email.com", help_text="Enter in correct format abc@email.com")
+    dateOfBirth = models.DateField(default=timezone.now)
+    ethnicity = models.TextField(default="Not Reported")
+    race = models.TextField(default="Not Reported")
     gender = models.CharField(
         max_length=25,
         choices=GENDER_CHOICES,
@@ -123,14 +124,14 @@ class Patient(models.Model):
         choices=GIVEN_BIRTH_CHOICES,
         default='NO',
     )
-    timesBirth = models.PositiveIntegerField()
+    timesBirth = models.PositiveIntegerField(0)
     exercise = models.CharField(
         max_length=10,
         choices=EXERCISE_CHOICES,
         default='NO',
     )
     allergies = models.TextField(default="None")
-    userComment = models.CharField(max_length=1000)
+    userComment = models.CharField(max_length=1000, default="None")
     location = gis_models.PointField(default=Point(0, 0))
     searchRange = models.IntegerField(default=10)
 
