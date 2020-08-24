@@ -18,13 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PatientSerializer(serializers.ModelSerializer):
-    user_id = serializers.ReadOnlyField()
     class Meta:
         model = Patient
-        fields = ('user_id', 'age', 'height', 'weight')
+        fields = ('user.id', 'age', 'height', 'weight')
 
     def create(self, validated_data):
-        pk = validated_data.pop('user_id')
+        pk = validated_data.pop('user.id')
         return Patient.objects.create(user=User.objects.get(id=pk), **validated_data)
 
 
