@@ -124,7 +124,7 @@ class Patient(models.Model):
         choices=GIVEN_BIRTH_CHOICES,
         default='NO',
     )
-    timesBirth = models.PositiveIntegerField(0)
+    timesBirth = models.PositiveIntegerField(default=0)
     exercise = models.CharField(
         max_length=10,
         choices=EXERCISE_CHOICES,
