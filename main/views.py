@@ -63,6 +63,8 @@ def users_detail(request, pk):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+@api_view(['PUT', 'DELETE'])
 def patient_detail(request, pk):
     try:
         patient = Patient.objects.get(pk=pk)

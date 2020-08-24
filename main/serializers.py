@@ -5,12 +5,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework_jwt.settings import api_settings
-
+from django.contrib.auth.hashers import make_password
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'date_joined')
+
+    def create(self, validated_data):
+        password = make_password(validated_data.pop('password'))
+        return User.objects.create(password=password, **validated_data)
 
 
 class PatientSerializer(serializers.ModelSerializer):
