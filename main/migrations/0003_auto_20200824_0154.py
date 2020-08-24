@@ -146,7 +146,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='patient',
             name='timesBirth',
-            field=models.PositiveIntegerField(default=django.utils.timezone.now),
+            field=models.PositiveIntegerField(default=0),
             preserve_default=False,
         ),
         migrations.AddField(
