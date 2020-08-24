@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models as gis_models
-
+from django.contrib.gis.geos import Point
 
 class Patient(models.Model):
+    userTransferID=models.IntegerField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     SMOKING_CHOICES = [
         ('CURRENT', "Current Smoker"),
@@ -103,10 +104,10 @@ class Patient(models.Model):
     dateEnrolled = models.DateField()
     firstName = models.TextField()
     lastName = models.TextField()
-    street = models.TextField()
-    city = models.TextField()
-    state = models.TextField()
-    zipCode = models.PositiveIntegerField()
+    # street = models.TextField()
+    # city = models.TextField()
+    # state = models.TextField()
+    # zipCode = models.PositiveIntegerField()
     phoneNumber = models.IntegerField()
     email = models.TextField(help_text="Enter in correct format abc@email.com")
     dateOfBirth = models.DateField()
@@ -128,10 +129,10 @@ class Patient(models.Model):
         choices=EXERCISE_CHOICES,
         default='NO',
     )
-    allergies = models.TextField()
+    allergies = models.TextField(default="None")
     userComment = models.CharField(max_length=1000)
-    location = gis_models.PointField()
-    searchRange = models.IntegerField()
+    location = gis_models.PointField(default=Point(0, 0))
+    searchRange = models.IntegerField(default=10)
 
     def __str__(self):
         return self.user.username
