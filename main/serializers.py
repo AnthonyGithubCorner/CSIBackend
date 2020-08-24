@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PatientSerializer(serializers.ModelSerializer):
-    user_id = serializers.ReadOnlyField(source='Patient.id')
+    user_id = serializers.ReadOnlyField()
     class Meta:
         model = Patient
         fields = ('user_id', 'age', 'height', 'weight')
