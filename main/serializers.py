@@ -18,6 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PatientSerializer(serializers.ModelSerializer):
+    user_id = serializers.Field(source='get_absolute_url')
     class Meta:
         model = Patient
         fields = ('user_id', 'age', 'height', 'weight')
