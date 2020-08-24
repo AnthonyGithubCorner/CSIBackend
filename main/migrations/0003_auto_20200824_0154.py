@@ -19,19 +19,19 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='covidtest',
             name='behaviorIntervention',
-            field=models.CharField(default=None, max_length=1000),
+            field=models.CharField(default="None", max_length=1000),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='covidtest',
             name='covidMedicineOthers',
-            field=models.CharField(default=None, max_length=200),
+            field=models.CharField(default="None", max_length=200),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='covidtest',
             name='covidStatus',
-            field=models.CharField(choices=[('CURRENTLY POSITIVE', 'Currently Positive'), ('CURRENTLY NEGATIVE', 'Currently Negative'), ('CURRENTLY NEGATIVE, WAS POSITIVE', 'Currently Negative, Was Positive'), ('NOT TESTED', 'Not tested'), ('PREFER NOT TO TELL', 'Prefer not to tell')], default='NONE', max_length=50),
+            field=models.CharField(choices=[('CURRENTLY POSITIVE', 'Currently Positive'), ('CURRENTLY NEGATIVE', 'Currently Negative'), ('CURRENTLY NEGATIVE, WAS POSITIVE', 'Currently Negative, Was Positive'), ('NOT TESTED', 'Not tested'), ('PREFER NOT TO TELL', 'Prefer not to tell')], default='"None"', max_length=50),
         ),
         migrations.AddField(
             model_name='covidtest',
@@ -48,18 +48,18 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='covidtest',
             name='nutritionIntervention',
-            field=models.CharField(default=None, max_length=1000),
+            field=models.CharField(default="None", max_length=1000),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='covidtest',
             name='otherIntervention',
-            field=models.CharField(choices=[('BEHAVIOR', 'Behavior'), ('NUTRITION', 'Nutrition'), ('OTHERS', 'Others')], default='NONE', max_length=10),
+            field=models.CharField(choices=[('BEHAVIOR', 'Behavior'), ('NUTRITION', 'Nutrition'), ('OTHERS', 'Others')], default='"None"', max_length=10),
         ),
         migrations.AddField(
             model_name='patient',
             name='allergies',
-            field=models.TextField(default=None),
+            field=models.TextField(default="None"),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='patient',
             name='ethnicity',
-            field=models.TextField(default=None),
+            field=models.TextField(default="None"),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -128,7 +128,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='patient',
             name='race',
-            field=models.TextField(default=None),
+            field=models.TextField(default="None"),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -152,7 +152,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='patient',
             name='userComment',
-            field=models.CharField(default=None, max_length=1000),
+            field=models.CharField(default="None", max_length=1000),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -182,7 +182,7 @@ class Migration(migrations.Migration):
             name='MedicalPhenotype',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('problem', models.CharField(choices=[('CARDIOVASCULAR DISEASE', 'Cardiovascular Disease'), ('NEUROLOGICAL DISEASE', 'Neurological Disease'), ('CANCER', 'Cancer'), ('RESPIRATORY DISEASE', 'Respiratory Disease'), ('METABOLIC DISEASE', 'Metabolic Disease'), ('IMMUNOLOGICAL DISEASE', 'Immunological Disease'), ('HEMATOLOGICAL DISEASE', 'Hematological Disease'), ('MENTAL DISEASE', 'Mental Disease'), ('INFECTIOUS DISEASE', 'Infectious Disease'), ('GASTROINTESTINAL DISEASE', 'Gastrointestinal Disease'), ('ENDOCRINE SYSTEM DISEASE', 'Endocrine System Disease'), ('REPRODUCTIVE SYSTEM DISEASE', 'Reproductive System Disease'), ('URINARY SYSTEM DISEASE', 'Urinary System Disease'), ('GENETIC DISEASE', 'Genetic Disease'), ('SYNDROME', 'Syndrome'), ('OTHERS', 'Others')], default='NONE', max_length=60)),
+                ('problem', models.CharField(choices=[('CARDIOVASCULAR DISEASE', 'Cardiovascular Disease'), ('NEUROLOGICAL DISEASE', 'Neurological Disease'), ('CANCER', 'Cancer'), ('RESPIRATORY DISEASE', 'Respiratory Disease'), ('METABOLIC DISEASE', 'Metabolic Disease'), ('IMMUNOLOGICAL DISEASE', 'Immunological Disease'), ('HEMATOLOGICAL DISEASE', 'Hematological Disease'), ('MENTAL DISEASE', 'Mental Disease'), ('INFECTIOUS DISEASE', 'Infectious Disease'), ('GASTROINTESTINAL DISEASE', 'Gastrointestinal Disease'), ('ENDOCRINE SYSTEM DISEASE', 'Endocrine System Disease'), ('REPRODUCTIVE SYSTEM DISEASE', 'Reproductive System Disease'), ('URINARY SYSTEM DISEASE', 'Urinary System Disease'), ('GENETIC DISEASE', 'Genetic Disease'), ('SYNDROME', 'Syndrome'), ('OTHERS', 'Others')], default='"None"', max_length=60)),
                 ('cardioDisease', models.CharField(max_length=1000)),
                 ('cardioMedication', models.CharField(max_length=1000)),
                 ('neurologicalInfo', models.CharField(max_length=1000)),
@@ -197,10 +197,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('dateEnrolled', models.DateField()),
-                ('insuranceType', models.CharField(choices=[('MEDICARE', 'Medicare'), ('MEDICAID', 'Medicaid'), ('PRIVATE HEALTH PROGRAMS', 'Private Health Programs'), ('OTHER', 'Other'), ('NONE', 'None')], default='NONE', max_length=100)),
+                ('insuranceType', models.CharField(choices=[('MEDICARE', 'Medicare'), ('MEDICAID', 'Medicaid'), ('PRIVATE HEALTH PROGRAMS', 'Private Health Programs'), ('OTHER', 'Other'), ('"None"', '"None"')], default='"None"', max_length=100)),
                 ('insuranceBrand', models.TextField()),
-                ('insurancePlan', models.CharField(choices=[('HMO', 'HMO'), ('PPO', 'PPO'), ('EPO', 'EPO'), ('POS', 'POS'), ('HDHP', 'HDHO'), ('NONE', 'None')], default='NONE', max_length=100)),
-                ('carePlan', models.CharField(choices=[('DIABETES CARE PLAN', 'Diabetes care plan'), ('ALLERGIC DISORDER MONITORING', 'Allergic disorder monitoring'), ('ANTI-SUICIDE PSYCHOTHERAPY', 'Anti-suicide psychotherapy'), ('ASTHMA SELF MANAGEMENT', 'Asthma self management'), ('BURN CARE', 'Burn care'), ('CANCER CARE PLAN', 'Cancer care plan'), ('CHRONIC OBSTRUCTIVE PULMONARY DISEASE', 'Chronic obstructive pulmonary disease '), ('DEMENTIA MANAGEMENT', 'Dementia management'), ('DIABETES SELF MANAGEMENT PLAN', 'Diabetes self management plan'), ('DIALYSIS CARE PLAN', 'Dialysis care plan'), ('FRACTURE CARE', 'Fracture care'), ('HEAD INJURY REHABILITATION', 'Head injury rehabilitation'), ('HEART FAILURE SELF MANAGEMENT PLAN', 'Heart failure self management plan'), ('HYPERLIPIDEMIA CLINICAL MANAGEMENT PLAN', 'Hyperlipidemia clinical management plan'), ('INFECTIOUS DISEASE CARE PLAN', 'Infectious disease care plan'), ('INPATIENT CARE PLAN', 'Inpatient care plan'), ('LIFESTYLE EDUCATION REGARDING HYPERTENSION', 'Lifestyle education regarding hypertension'), ('MAJOR DEPRESSIVE DISORDER CLINICAL MANAGEMENT PLAN', 'Major depressive disorder clinical management plan'), ('MAJOR SURGERY CARE MANAGEMENT', 'Major surgery care management'), ('MENTAL HEALTH CARE PLAN', 'Mental health care plan'), ('MINOR SURGERY CARE MANAGEMENT', 'Minor surgery care management'), ('MUSCULOSKELETAL CARE', 'Musculoskeletal care'), ('OVERACTIVITY/INATTENTION BEHAVIOR MANAGEMENT', 'Overactivity/inattention behavior management'), ('PHYSICAL THERAPY PROCEDURE', 'Physical therapy procedure'), ('POSTOPERATIVE CARE', 'Postoperative care'), ('PSYCHIATRY CARE PLAN', 'Psychiatry care plan'), ('RESPIRATORY THERAPY', 'Respiratory therapy'), ('ROUTINE ANTENATAL CARE', 'Routine antenatal care'), ('SELF-CARE INTERVENTIONS', 'Self-care interventions'), ('SKIN CONDITION CARE', 'Skin condition care'), ('SPINAL CORD INJURY REHABILITATION', 'Spinal cord injury rehabilitation'), ('TERMINAL CARE', 'Terminal care'), ('URINARY TRACT INFECTION CARE', 'Urinary tract infection care'), ('WOUND CARE', 'Wound care'), ('OTHER', 'Other')], default='NONE', max_length=200)),
+                ('insurancePlan', models.CharField(choices=[('HMO', 'HMO'), ('PPO', 'PPO'), ('EPO', 'EPO'), ('POS', 'POS'), ('HDHP', 'HDHO'), ('"None"', '"None"')], default='"None"', max_length=100)),
+                ('carePlan', models.CharField(choices=[('DIABETES CARE PLAN', 'Diabetes care plan'), ('ALLERGIC DISORDER MONITORING', 'Allergic disorder monitoring'), ('ANTI-SUICIDE PSYCHOTHERAPY', 'Anti-suicide psychotherapy'), ('ASTHMA SELF MANAGEMENT', 'Asthma self management'), ('BURN CARE', 'Burn care'), ('CANCER CARE PLAN', 'Cancer care plan'), ('CHRONIC OBSTRUCTIVE PULMONARY DISEASE', 'Chronic obstructive pulmonary disease '), ('DEMENTIA MANAGEMENT', 'Dementia management'), ('DIABETES SELF MANAGEMENT PLAN', 'Diabetes self management plan'), ('DIALYSIS CARE PLAN', 'Dialysis care plan'), ('FRACTURE CARE', 'Fracture care'), ('HEAD INJURY REHABILITATION', 'Head injury rehabilitation'), ('HEART FAILURE SELF MANAGEMENT PLAN', 'Heart failure self management plan'), ('HYPERLIPIDEMIA CLINICAL MANAGEMENT PLAN', 'Hyperlipidemia clinical management plan'), ('INFECTIOUS DISEASE CARE PLAN', 'Infectious disease care plan'), ('INPATIENT CARE PLAN', 'Inpatient care plan'), ('LIFESTYLE EDUCATION REGARDING HYPERTENSION', 'Lifestyle education regarding hypertension'), ('MAJOR DEPRESSIVE DISORDER CLINICAL MANAGEMENT PLAN', 'Major depressive disorder clinical management plan'), ('MAJOR SURGERY CARE MANAGEMENT', 'Major surgery care management'), ('MENTAL HEALTH CARE PLAN', 'Mental health care plan'), ('MINOR SURGERY CARE MANAGEMENT', 'Minor surgery care management'), ('MUSCULOSKELETAL CARE', 'Musculoskeletal care'), ('OVERACTIVITY/INATTENTION BEHAVIOR MANAGEMENT', 'Overactivity/inattention behavior management'), ('PHYSICAL THERAPY PROCEDURE', 'Physical therapy procedure'), ('POSTOPERATIVE CARE', 'Postoperative care'), ('PSYCHIATRY CARE PLAN', 'Psychiatry care plan'), ('RESPIRATORY THERAPY', 'Respiratory therapy'), ('ROUTINE ANTENATAL CARE', 'Routine antenatal care'), ('SELF-CARE INTERVENTIONS', 'Self-care interventions'), ('SKIN CONDITION CARE', 'Skin condition care'), ('SPINAL CORD INJURY REHABILITATION', 'Spinal cord injury rehabilitation'), ('TERMINAL CARE', 'Terminal care'), ('URINARY TRACT INFECTION CARE', 'Urinary tract infection care'), ('WOUND CARE', 'Wound care'), ('OTHER', 'Other')], default='"None"', max_length=200)),
                 ('carePlanOther', models.TextField()),
                 ('annualMedicalBill', models.TextField()),
                 ('annualInsuranceBill', models.TextField()),
