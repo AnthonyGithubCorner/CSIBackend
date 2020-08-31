@@ -132,7 +132,7 @@ class Patient(models.Model):
     )
     allergies = models.TextField(default="None")
     userComment = models.CharField(max_length=1000, default="None")
-    location = gis_models.PointField(default=Point(0, 0))
+    currentPos = gis_models.PointField(default=Point(0, 0))
     searchRange = models.IntegerField(default=10)
 
     def __str__(self):
