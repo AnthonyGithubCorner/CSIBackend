@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
-
+from django.contrib.gis.geos import Point
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework_jwt.settings import api_settings
@@ -25,7 +25,9 @@ class PatientSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         pk = validated_data.pop('userTransferID')
-        return Patient.objects.create(user=User.objects.get(id=pk), **validated_data)
+        loc = validated_data.pop('currentPos')
+        pnt = Point(loc.lan, loc.lat)
+        return Patient.objects.create(user=User.objects.get(id=pk), currentPos=pnt, **validated_data)
 
 
 JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
