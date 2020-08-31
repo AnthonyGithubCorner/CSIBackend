@@ -26,7 +26,7 @@ class PatientSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         pk = validated_data.pop('userTransferID')
         loc = validated_data.pop('currentPos')
-        pnt = Point(loc.lan, loc.lat)
+        pnt = Point(loc.lng, loc.lat)
         return Patient.objects.create(user=User.objects.get(id=pk), currentPos=pnt, **validated_data)
 
 
