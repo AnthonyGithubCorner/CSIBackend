@@ -21,6 +21,7 @@ import json
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
+import django_filters.rest_framework
 
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
 
@@ -40,15 +41,15 @@ def user_login(request):
     return Response(response, status=status_code)
 
 
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     ordering_fields = ['username', 'email', 'id']
-
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 
 @api_view(['PUT', 'DELETE'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
 def users_detail(request, pk):
     try:
         user = User.objects.get(pk=pk)
@@ -68,6 +69,8 @@ def users_detail(request, pk):
 
 
 @api_view(['PUT', 'DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def patient_detail(request, pk):
     try:
         patient = Patient.objects.get(pk=pk)
@@ -85,10 +88,16 @@ def patient_detail(request, pk):
         patient.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 class PatientList(generics.ListCreateAPIView):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
     ordering_fields = ['age']
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
+
 
 @api_view(['GET'])
 def loginView(request):
