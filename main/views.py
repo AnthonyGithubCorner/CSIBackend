@@ -93,9 +93,9 @@ def loginView(request):
 
 @api_view(['GET'])
 def closest(request, pk):
-    user = User.objects.get(pk=pk)
-    pnt = user.patient.location
-    rg = user.patient.searchRange
+    patient = Patient.objects.get(pk=pk)
+    pnt = patient.currentPos
+    rg = patient.searchRange
     qs = Point.objects.filter(point__distance_lte=(pnt, D(km=rg)))
     outcome = "OBJECTID,ID,NAME"
     x = f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json"
