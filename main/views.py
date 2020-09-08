@@ -113,7 +113,7 @@ def closest(request, pk):
     x = f"{HOSPITAL_URL}/query?where=1%3D1&outFields={outcome}&geometry={pnt[0]},{pnt[1]}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&distance={rg}&units=esriSRUnit_Kilometer&outSR=4326&f=json"
     with urllib.request.urlopen(x) as url:
         data = json.loads(url.read().decode())
-    x = f"https://clinicaltrials.gov/api/query/full_studies?expr=SEARCH%5BLocation%5D%28AREA%5BLocationZip%5D{data.features[0].attributes.ZipCode}+AND+AREA%5BLocationStatus%5DRecruiting%29&min_rnk=1&max_rnk=&fmt=json"
+    x = f"https://clinicaltrials.gov/api/query/full_studies?expr=SEARCH%5BLocation%5D%28AREA%5BLocationZip%5D{data['features'][0]['attributes']['ZipCode']}+AND+AREA%5BLocationStatus%5DRecruiting%29&min_rnk=1&max_rnk=&fmt=json"
     with urllib.request.urlopen(x) as url:
         data = json.loads(url.read().decode())
     return Response(data, status=status.HTTP_200_OK)
