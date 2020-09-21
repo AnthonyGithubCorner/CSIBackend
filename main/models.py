@@ -466,7 +466,6 @@ class ModalityResource(models.Model):
     patientMoodScore = models.IntegerField()
     timeRequired = models.IntegerField()
 
-
 # class ClinicalTrials(models.Model):
 #     What they are searching for'
 #
