@@ -25,3 +25,5 @@ admin.site.register(Patient, PatientAdmin)
 admin.site.register(CovidTest)
 admin.site.register(NewsArticle)
 admin.site.register(ScientificArticle)
+admin.site.register(ModalityResource)
+
