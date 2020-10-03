@@ -59,3 +59,11 @@ class UserLoginSerializer(serializers.Serializer):
             'username': user.username,
             'token': jwt_token
         }
+
+
+class ModalityResourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ModalityResource
+        fields = ('articleLink', 'title', 'description', 'publishDate', 'goal', 'typeArticle', 'patientReadScore',
+                  'patientPhysicalScore', 'patientMoodScore', 'timeRequired')
+
