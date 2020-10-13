@@ -11,6 +11,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ModalityResource',
             name='articleImage',
-            field=models.CharField(max_length=1000),
+            field=models.CharField(max_length=1000, default="https://static.thenounproject.com/png/3255444-200.png"),
         ),
     ]
