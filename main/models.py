@@ -440,6 +440,9 @@ class DemographicAffected(models.Model):
 class ConditionsHelped(models.Model):
     descriptionConditionHelped = models.CharField(max_length=1000)
 
+class ConditionsHelped2(models.Model):
+    descriptionConditionHelped = models.CharField(max_length=1000)
+
 
 class Conditions(models.Model):
     descriptionCondition = models.CharField(max_length=1000)
@@ -452,6 +455,7 @@ class Modalities(models.Model):
 class ModalityResource(models.Model):
 
     articleLink = models.CharField(max_length=1000)
+    articleImage = models.CharField(max_length=1000)
     title = models.CharField(max_length=1000)
     description = models.TextField()
     publishDate = models.DateField(default=timezone.now)
