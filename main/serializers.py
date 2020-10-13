@@ -64,6 +64,6 @@ class UserLoginSerializer(serializers.Serializer):
 class ModalityResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModalityResource
-        fields = ('articleLink', 'title', 'description', 'publishDate', 'goal', 'typeArticle', 'patientReadScore',
+        fields = ('articleLink', 'articleImage', 'title', 'description', 'publishDate', 'goal', 'typeArticle', 'patientReadScore',
                   'patientPhysicalScore', 'patientMoodScore', 'timeRequired')
 
