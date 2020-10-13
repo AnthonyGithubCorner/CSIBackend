@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='ModalityResource',
             name='articleImage',
             field=models.CharField(max_length=1000),
