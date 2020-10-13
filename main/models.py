@@ -455,7 +455,7 @@ class Modalities(models.Model):
 class ModalityResource(models.Model):
 
     articleLink = models.CharField(max_length=1000)
-    articleImage = models.CharField(max_length=1000)
+    articleImage = models.CharField(max_length=1000, default="https://static.thenounproject.com/png/3255444-200.png")
     title = models.CharField(max_length=1000)
     description = models.TextField()
     publishDate = models.DateField(default=timezone.now)
