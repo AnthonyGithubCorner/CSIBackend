@@ -24,6 +24,8 @@ from rest_framework.permissions import IsAuthenticated
 import django_filters.rest_framework
 from .models import ModalityResource
 from .serializers import ModalityResourceSerializer
+from django_filters import rest_framework as filters
+
 
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
 
@@ -124,7 +126,12 @@ def closest(request, pk):
 class ModalityResourceListCreate(generics.ListCreateAPIView):
     queryset = ModalityResource.objects.all()
     serializer_class = ModalityResourceSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ('publishDate', 'typeArticle')
 
 
-
+class ModalityResourceFilter(filters.FilterSet):
+    class Meta:
+        model = ModalityResource
+        fields = ('publishDate', 'typeArticle')
 
