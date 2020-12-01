@@ -466,7 +466,19 @@ class ModalityResource(models.Model):
     patientMoodScore = models.IntegerField()
     timeRequired = models.IntegerField()
 
-# class ClinicalTrials(models.Model):
+
+class Payer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE)
+    corporationName = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    applicationId = models.IntegerField()
+    dateCreated = models.DateTimeField(auto_now_add=True)
+
+
+
+    # class ClinicalTrials(models.Model):
 #     What they are searching for'
 #
 #     location = models.geolocation()

@@ -67,3 +67,43 @@ class ModalityResourceSerializer(serializers.ModelSerializer):
         fields = ('articleLink', 'title', 'description', 'publishDate', 'goal', 'typeArticle', 'patientReadScore',
                   'patientPhysicalScore', 'patientMoodScore', 'timeRequired')
 
+
+class PayerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payer
+        fields = ('corporationName', 'applicationId', 'email', 'patient_firstName', 'patient_lastName',
+                  'patient_email', 'patient_phoneNumber', 'patient_dateOfBirth', 'patient_gender', 'patient_race','patient_age')
+
+    patient_firstName = serializers.SerializerMethodField('get_patient_firstName')
+    patient_lastName = serializers.SerializerMethodField('get_patient_lastName')
+    patient_email = serializers.SerializerMethodField('get_patient_email')
+    patient_phoneNumber = serializers.SerializerMethodField('get_patient_phoneNumber')
+    patient_dateOfBirth = serializers.SerializerMethodField('get_patient_dateOfBirth')
+    patient_gender = serializers.SerializerMethodField('get_patient_gender')
+    patient_race = serializers.SerializerMethodField('get_patient_race')
+    patient_age = serializers.SerializerMethodField('get_patient_age')
+
+    def get_patient_firstName(self, obj):
+        return obj.patient.firstName
+
+    def get_patient_lastName(self, obj):
+        return obj.patient.lastName
+
+    def get_patient_email(self, obj):
+        return obj.patient.email
+
+    def get_patient_phoneNumber(self, obj):
+        return obj.patient.phoneNumber
+
+    def get_patient_dateOfBirth(self, obj):
+        return obj.patient.dateOfBirth
+
+    def get_patient_gender(self, obj):
+        return obj.patient.gender
+
+    def get_patient_race(self, obj):
+        return obj.patient.race
+
+    def get_patient_age(self, obj):
+        return obj.patient.age
+

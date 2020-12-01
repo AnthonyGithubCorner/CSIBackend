@@ -1,6 +1,6 @@
 import os
-import django_heroku
-from datetime import timedelta
+#import django_heroku
+#from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'p9c3a9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -72,9 +72,14 @@ WSGI_APPLICATION = 'CSIBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+        #'USER': 'csitestuser',
+        #'PASSWORD': 'a1b2c3',
+        #'HOST': 'localhost',
+        #'PORT': '',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -130,8 +135,8 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
 
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH = r'C:\Users\prima\PycharmProjects\CSIBackend\venv\lib\site-packages'
+GEOS_LIBRARY_PATH = r'C:\Users\prima\PycharmProjects\CSIBackend\venv\lib\site-packages'
 
-django_heroku.settings(locals())
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+#django_heroku.settings(locals())
+#DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'

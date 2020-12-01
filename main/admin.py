@@ -26,4 +26,4 @@ admin.site.register(CovidTest)
 admin.site.register(NewsArticle)
 admin.site.register(ScientificArticle)
 admin.site.register(ModalityResource)
-
+admin.site.register(Payer)
