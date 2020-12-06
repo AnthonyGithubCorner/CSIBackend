@@ -135,3 +135,10 @@ class ModalityResourceFilter(filters.FilterSet):
         model = ModalityResource
         fields = ('publishDate', 'typeArticle')
 
+
+class PayerListCreate(generics.ListCreateAPIView):
+    queryset = Payer.objects.all()
+    serializer_class = PayerSerializer
+
+
+
