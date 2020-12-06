@@ -4,9 +4,48 @@ from django.contrib.gis.db import models as gis_models
 from django.contrib.gis.geos import Point
 from django.utils import timezone
 
+
+class DemographicAffected(models.Model):
+    descriptionDemo = models.CharField(max_length=1000)
+
+
+class ConditionsHelped(models.Model):
+    descriptionConditionHelped = models.CharField(max_length=1000)
+
+class ConditionsHelped2(models.Model):
+    descriptionConditionHelped = models.CharField(max_length=1000)
+
+
+class Conditions(models.Model):
+    descriptionCondition = models.CharField(max_length=1000)
+
+
+class Modalities(models.Model):
+    descriptionModality = models.CharField(max_length=1000)
+
+
+class ModalityResource(models.Model):
+    articleLink = models.CharField(max_length=1000)
+    articleImage = models.CharField(max_length=1000, default="https://static.thenounproject.com/png/3255444-200.png")
+    title = models.CharField(max_length=1000)
+    description = models.TextField()
+    publishDate = models.DateField(default=timezone.now)
+    modalities = models.ManyToManyField(Modalities)
+    conditions = models.ManyToManyField(Conditions)
+    conditionsHelped = models.ManyToManyField(ConditionsHelped)
+    demographicAffected = models.ManyToManyField(DemographicAffected)
+    goal = models.CharField(max_length=1000)
+    typeArticle = models.CharField(max_length=1000)
+    patientReadScore = models.IntegerField()
+    patientPhysicalScore = models.IntegerField()
+    patientMoodScore = models.IntegerField()
+    timeRequired = models.IntegerField()
+
 class Patient(models.Model):
     userTransferID=models.IntegerField(default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    ModalitiesWatched = models.ManyToManyField(ModalityResource, related_name="history+")
+    ModalitiesBookmarked = models.ManyToManyField(ModalityResource, related_name="bookmarked+")
     SMOKING_CHOICES = [
         ('CURRENT', "Current Smoker"),
         ('FORMER', 'Former Smoker'),
@@ -433,38 +472,8 @@ class Insurance(models.Model):
     userComment = models.CharField(max_length=1000)
 
 
-class DemographicAffected(models.Model):
-    descriptionDemo = models.CharField(max_length=1000)
 
 
-class ConditionsHelped(models.Model):
-    descriptionConditionHelped = models.CharField(max_length=1000)
-
-
-class Conditions(models.Model):
-    descriptionCondition = models.CharField(max_length=1000)
-
-
-class Modalities(models.Model):
-    descriptionModality = models.CharField(max_length=1000)
-
-
-class ModalityResource(models.Model):
-
-    articleLink = models.CharField(max_length=1000)
-    title = models.CharField(max_length=1000)
-    description = models.TextField()
-    publishDate = models.DateField(default=timezone.now)
-    modalities = models.ManyToManyField(Modalities)
-    conditions = models.ManyToManyField(Conditions)
-    conditionsHelped = models.ManyToManyField(ConditionsHelped)
-    demographicAffected = models.ManyToManyField(DemographicAffected)
-    goal = models.CharField(max_length=1000)
-    typeArticle = models.CharField(max_length=1000)
-    patientReadScore = models.IntegerField()
-    patientPhysicalScore = models.IntegerField()
-    patientMoodScore = models.IntegerField()
-    timeRequired = models.IntegerField()
 
 
 class Payer(models.Model):
