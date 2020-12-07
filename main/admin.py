@@ -20,10 +20,10 @@ class PatientAdmin(admin.ModelAdmin):
         InsuranceInline,
     ]
 
-admin.site.register(Point, geo_admin.GeoModelAdmin)
+# admin.site.register(Point, geo_admin.GeoModelAdmin)
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(CovidTest)
 admin.site.register(NewsArticle)
 admin.site.register(ScientificArticle)
 admin.site.register(ModalityResource)
-
+admin.site.register(Payer)

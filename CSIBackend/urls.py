@@ -14,10 +14,10 @@ urlpatterns = [
     # path('api/users/',  views.UserList.as_view()),
     path('api/patients/', views.PatientList.as_view()),
     path('api/patients/<int:pk>/', views.patient_detail),
-    path('api/hello/', views.loginView),
     path('api/closest/<int:pk>/', views.closest),
     path('token/obtain/', obtain_auth_token),
-    path('api/Modality/', views.ModalityResourceListCreate.as_view())
+    path('api/patients/', views.ModalityResourceListCreate.as_view()),
+    path('api/payer', views.PayerListCreate.as_view())
 
     # path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     # path('test', views.home),
