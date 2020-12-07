@@ -16,13 +16,13 @@ urlpatterns = [
     path('api/patients/', views.PatientList.as_view()),
     path('api/createpatients/', views.patient_create),
     path('api/patients/<int:pk>/', views.patient_detail),
-    path('api/closest/<int:pk>/', views.closest),
     path('token/obtain/', obtain_auth_token),
     path('api/patients/', views.ModalityResourceListCreate.as_view()),
     path('api/payer', views.PayerListCreate.as_view())
 
     # path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     # path('test', views.home),
+    # path('api/closest/<int:pk>/', views.closest),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
