@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
-from django.contrib.gis.geos import Point
+# from django.contrib.gis.geos import Point
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework_jwt.settings import api_settings

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.gis.db import models as gis_models
-from django.contrib.gis.geos import Point
+# from django.contrib.gis.db import models as gis_models
+# from django.contrib.gis.geos import Point
 from django.utils import timezone
 
 

@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from django.contrib import admin
 from main.models import *
-from django.contrib.gis import admin as geo_admin
+# from django.contrib.gis import admin as geo_admin
 
 
 class CovidTestInline(admin.TabularInline):
