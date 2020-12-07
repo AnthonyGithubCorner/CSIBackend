@@ -57,7 +57,7 @@ class UserList(generics.ListCreateAPIView):
     ordering_fields = ['username', 'email', 'id']
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 
-@api_view('POST')
+@api_view(['POST'])
 def user_create(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
@@ -122,7 +122,7 @@ class PatientList(generics.ListCreateAPIView):
     ordering_fields = ['age']
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 
-@api_view('POST')
+@api_view(['POST'])
 def patient_create(request):
     if request.method == 'POST':
         serializer = PatientSerializer(data=request.data)
