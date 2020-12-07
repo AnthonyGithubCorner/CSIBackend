@@ -134,4 +134,3 @@ CORS_ALLOW_CREDENTIALS = False
 # GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 #
 django_heroku.settings(locals())
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
