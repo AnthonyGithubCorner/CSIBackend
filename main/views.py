@@ -48,7 +48,7 @@ def user_login(request):
 
     return Response(response, status=status_code)
 
-#creates users automatically
+#https://www.django-rest-framework.org/api-guide/generic-views/#listcreateapiview
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 class UserList(generics.ListCreateAPIView):
@@ -56,6 +56,14 @@ class UserList(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     ordering_fields = ['username', 'email', 'id']
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
+@api_view('POST')
+def user_create(request):
+    if request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
 
 
 @api_view(['PUT', 'DELETE'])
@@ -113,6 +121,14 @@ class PatientList(generics.ListCreateAPIView):
     serializer_class = PatientSerializer
     ordering_fields = ['age']
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
+@api_view('POST')
+def patient_create(request):
+    if request.method == 'POST':
+        serializer = PatientSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
 
 #gets closest hospitals
 @api_view(['GET'])
