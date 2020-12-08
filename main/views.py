@@ -133,8 +133,6 @@ def patient_create(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
 #gets resources
 class ModalityResourceListCreate(generics.ListCreateAPIView):
     queryset = ModalityResource.objects.all()
@@ -149,10 +147,50 @@ class ModalityResourceFilter(filters.FilterSet):
         model = ModalityResource
         fields = ('publishDate', 'typeArticle')
 
-#gets list of payers
+
+@api_view(['PUT', 'DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def payer_detail(request, pk):
+    try:
+        #gets payer to change/delete
+        payer = Payer.objects.get(pk=pk)
+    except Payer.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    #change payer
+    if request.method == 'PUT':
+        serializer = PayerSerializer(payer, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    #delete payer
+    elif request.method == 'DELETE':
+        payer.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# gives list mainly for debug purposes
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 class PayerListCreate(generics.ListCreateAPIView):
     queryset = Payer.objects.all()
     serializer_class = PayerSerializer
+    ordering_fields = ['corporationName']
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
+
+@api_view(['POST'])
+def payer_create(request):
+    if request.method == 'POST':
+        serializer = PayerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 #gets closest hospitals

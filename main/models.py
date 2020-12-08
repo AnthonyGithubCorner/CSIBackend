@@ -469,11 +469,8 @@ class Insurance(models.Model):
     userComment = models.CharField(max_length=1000)
 
 
-
-
-
-
 class Payer(models.Model):
+    userTransferID = models.IntegerField(default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE)
