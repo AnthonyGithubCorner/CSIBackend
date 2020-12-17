@@ -73,7 +73,7 @@ class ModalityResourceSerializer(serializers.ModelSerializer):
 class PayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payer
-        fields = ('corporationName', 'applicationId', 'email', 'patient_firstName', 'patient_lastName',
+        fields = ("userTransferID", 'corporationName', 'applicationId', 'email', 'patient_firstName', 'patient_lastName',
                   'patient_email', 'patient_phoneNumber', 'patient_dateOfBirth', 'patient_gender', 'patient_race','patient_age')
 
     def create(self, validated_data):
