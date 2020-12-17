@@ -49,8 +49,6 @@ def user_login(request):
     return Response(response, status=status_code)
 
 #https://www.django-rest-framework.org/api-guide/generic-views/#listcreateapiview
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

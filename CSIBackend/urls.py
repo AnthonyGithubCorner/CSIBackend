@@ -18,7 +18,8 @@ urlpatterns = [
     path('api/patients/<int:pk>/', views.patient_detail),
     path('token/obtain/', obtain_auth_token),
     path('api/patients/', views.ModalityResourceListCreate.as_view()),
-    path('api/payer', views.PayerListCreate.as_view())
+    path('api/payers/', views.PayerListCreate.as_view()),
+    path('api/createpayers/', views.payer_create.as_view())
 
     # path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     # path('test', views.home),
