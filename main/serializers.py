@@ -76,6 +76,13 @@ class PayerSerializer(serializers.ModelSerializer):
         fields = ('corporationName', 'applicationId', 'email', 'patient_firstName', 'patient_lastName',
                   'patient_email', 'patient_phoneNumber', 'patient_dateOfBirth', 'patient_gender', 'patient_race','patient_age')
 
+    def create(self, validated_data):
+        pk = validated_data.pop('userTransferID')
+        # loc = validated_data.pop('currentPos')
+        # pnt = Point(loc['lng'], loc['lat'])
+        # return Patient.objects.create(user=User.objects.get(id=pk), currentPos=pnt, **validated_data)
+        return Payer.objects.create(user=User.objects.get(id=pk), **validated_data)
+
     patient_firstName = serializers.SerializerMethodField('get_patient_firstName')
     patient_lastName = serializers.SerializerMethodField('get_patient_lastName')
     patient_email = serializers.SerializerMethodField('get_patient_email')
@@ -108,4 +115,6 @@ class PayerSerializer(serializers.ModelSerializer):
 
     def get_patient_age(self, obj):
         return obj.patient.age
+
+
 
