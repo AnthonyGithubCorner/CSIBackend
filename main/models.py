@@ -142,11 +142,7 @@ class Patient(models.Model):
         choices=DISABILITIES_CHOICES,
         default='ABLE',
     )
-    corporation = models.CharField(
-        max_length=30,
-        choices=Payer.corporationName,
 
-    )
     dateEnrolled = models.DateField(default=timezone.now)
     firstName = models.TextField(default="John")
     lastName = models.TextField(default="Smith")
@@ -179,11 +175,7 @@ class Patient(models.Model):
     userComment = models.CharField(max_length=1000, default="None")
     # currentPos = gis_models.PointField(default=Point(0, 0))
     searchRange = models.IntegerField(default=10)
-    corporation = models.CharField(
-        max_length=30,
-        choices=CORPORATION_CHOICES,
-        default='NO',
-    )
+
 
     def __str__(self):
         return self.user.username
