@@ -14,14 +14,25 @@ class InsuranceInline(admin.TabularInline):
     model = Insurance
     extra = 0
 
+class PatientInline(admin.TabularInline):
+    model = Patient
+    extra = 0
+
 class PatientAdmin(admin.ModelAdmin):
     inlines = [
         CovidTestInline,
         InsuranceInline,
     ]
 
+class PayerAdmin(admin.ModelAdmin):
+    inlines = [
+        PatientInline,
+    ]
+
+
 # admin.site.register(Point, geo_admin.GeoModelAdmin)
 admin.site.register(Patient, PatientAdmin)
+admin.site.register(Payer, PayerAdmin)
 admin.site.register(CovidTest)
 admin.site.register(NewsArticle)
 admin.site.register(ScientificArticle)

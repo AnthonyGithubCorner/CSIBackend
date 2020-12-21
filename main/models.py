@@ -4,6 +4,13 @@ from django.contrib.auth.models import User
 # from django.contrib.gis.geos import Point
 from django.utils import timezone
 
+class Payer(models.Model):
+    userTransferID = models.IntegerField(default=0)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    corporationName = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    applicationId = models.IntegerField()
+    dateCreated = models.DateTimeField(auto_now_add=True)
 
 class DemographicAffected(models.Model):
     descriptionDemo = models.CharField(max_length=1000)
@@ -385,14 +392,7 @@ class Sensors(models.Model):
     )
 
 
-class Payer(models.Model):
-    userTransferID = models.IntegerField(default=0)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    corporationName = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
-    applicationId = models.IntegerField()
-    dateCreated = models.DateTimeField(auto_now_add=True)
+
 
 
 class Insurance(models.Model):
