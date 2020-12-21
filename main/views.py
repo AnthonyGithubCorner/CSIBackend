@@ -64,7 +64,7 @@ def user_create(request):
         if serializer.is_valid():
             obj = serializer.save()
             serialized = UserSerializer('json', [ obj, ])
-            return Response(serialized, status=status.HTTP_201_CREATED)
+            return Response(serialized.validated_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
