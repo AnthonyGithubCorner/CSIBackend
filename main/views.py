@@ -62,10 +62,11 @@ class UserList(generics.ListCreateAPIView):
 def user_create(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
-        obj = serializer.save()
-        userCreated = serializers.serialize('json', obj)
-        return Response(userCreated, status=status.HTTP_201_CREATED)
-    return Response("User Could Not Be Created", status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            obj = serializer.save()
+            userCreated = serializers.serialize('json', obj)
+            return Response(userCreated, status=status.HTTP_201_CREATED)
+        return Response("User Could Not Be Created", status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PUT', 'DELETE'])
