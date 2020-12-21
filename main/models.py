@@ -53,7 +53,7 @@ class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     ModalitiesWatched = models.ManyToManyField(ModalityResource, related_name="history+")
     ModalitiesBookmarked = models.ManyToManyField(ModalityResource, related_name="bookmarked+")
-    payer = models.ForeignKey(Payer, on_delete=models.CASCADE)
+    corporationName = models.ForeignKey(Payer, on_delete=models.CASCADE)
     SMOKING_CHOICES = [
         ('CURRENT', "Current Smoker"),
         ('FORMER', 'Former Smoker'),
@@ -182,7 +182,6 @@ class Patient(models.Model):
     userComment = models.CharField(max_length=1000, default="None")
     # currentPos = gis_models.PointField(default=Point(0, 0))
     searchRange = models.IntegerField(default=10)
-
 
     def __str__(self):
         return self.user.username
@@ -393,6 +392,9 @@ class Sensors(models.Model):
 
 
 
+
+    def __str__(self):
+        return self.corporationName
 
 
 class Insurance(models.Model):
