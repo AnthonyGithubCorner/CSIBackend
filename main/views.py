@@ -49,6 +49,8 @@ def user_login(request):
     return Response(response, status=status_code)
 
 #https://www.django-rest-framework.org/api-guide/generic-views/#listcreateapiview
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -189,6 +191,15 @@ def payer_create(request):
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+def patient_profile(request):
+    if request.user.is_authenticated():
+        patientToGet = Patient.objects.get(user=request.user)
+        serialized = json.dumps(patientToGet)
+        return Response(serialized, status=status.HTTP_201_CREATED)
+    return Response("User Not Authenticated", status=status.HTTP_400_BAD_REQUEST)
 
 
 #gets closest hospitals

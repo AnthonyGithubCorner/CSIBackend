@@ -16,8 +16,11 @@ urlpatterns = [
     path('api/patients/', views.PatientList.as_view()),
     path('api/createpatients/', views.patient_create),
     path('api/patients/<int:pk>/', views.patient_detail),
+    path('api/patientprofile/', views.patient_profile),
     path('token/obtain/', obtain_auth_token),
     path('api/patients/', views.ModalityResourceListCreate.as_view()),
+
+    #payer dashboard
     path('api/payers/', views.PayerListCreate.as_view()),
     path('api/createpayers/', views.payer_create)
 
