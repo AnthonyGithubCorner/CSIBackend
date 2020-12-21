@@ -63,7 +63,7 @@ def user_create(request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            user = User.objects.get(username=request.data.username)
+            user = User.objects.get(username=request.data['username'])
             return Response(user, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
