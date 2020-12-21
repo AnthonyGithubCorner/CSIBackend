@@ -46,6 +46,7 @@ class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     ModalitiesWatched = models.ManyToManyField(ModalityResource, related_name="history+")
     ModalitiesBookmarked = models.ManyToManyField(ModalityResource, related_name="bookmarked+")
+    payer = models.ForeignKey(Payer, on_delete=models.CASCADE)
     SMOKING_CHOICES = [
         ('CURRENT', "Current Smoker"),
         ('FORMER', 'Former Smoker'),
@@ -141,6 +142,11 @@ class Patient(models.Model):
         choices=DISABILITIES_CHOICES,
         default='ABLE',
     )
+    corporation = models.CharField(
+        max_length=30,
+        choices=Payer.corporationName,
+
+    )
     dateEnrolled = models.DateField(default=timezone.now)
     firstName = models.TextField(default="John")
     lastName = models.TextField(default="Smith")
@@ -173,6 +179,11 @@ class Patient(models.Model):
     userComment = models.CharField(max_length=1000, default="None")
     # currentPos = gis_models.PointField(default=Point(0, 0))
     searchRange = models.IntegerField(default=10)
+    corporation = models.CharField(
+        max_length=30,
+        choices=CORPORATION_CHOICES,
+        default='NO',
+    )
 
     def __str__(self):
         return self.user.username
@@ -288,8 +299,6 @@ class NewsArticle(models.Model):
     website = models.CharField(max_length=100)
 
 
-
-
 class MedicalPhenotype(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     PROBLEM_CHOICES = [
@@ -383,8 +392,20 @@ class Sensors(models.Model):
         default='NO',
     )
 
+
+class Payer(models.Model):
+    userTransferID = models.IntegerField(default=0)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    corporationName = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    applicationId = models.IntegerField()
+    dateCreated = models.DateTimeField(auto_now_add=True)
+
+
 class Insurance(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    payer = models.ForeignKey(Payer, on_delete=models.CASCADE)
     INSURANCE_TYPE_CHOICES = [
         ('MEDICARE', "Medicare"),
         ('MEDICAID', 'Medicaid'),
@@ -468,16 +489,6 @@ class Insurance(models.Model):
     )
     userComment = models.CharField(max_length=1000)
 
-
-class Payer(models.Model):
-    userTransferID = models.IntegerField(default=0)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE)
-    corporationName = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
-    applicationId = models.IntegerField()
-    dateCreated = models.DateTimeField(auto_now_add=True)
 
 
 
