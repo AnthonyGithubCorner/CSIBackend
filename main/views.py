@@ -196,7 +196,7 @@ def payer_create(request):
 @api_view(['GET'])
 def patient_profile(request):
     if request.method == 'GET':
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             patientToGet = Patient.objects.get(user=request.user)
             serialized = json.dumps(patientToGet)
             return Response(serialized, status=status.HTTP_201_CREATED)

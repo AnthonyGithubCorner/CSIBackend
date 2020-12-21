@@ -399,7 +399,6 @@ class Sensors(models.Model):
 
 class Insurance(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    payer = models.ForeignKey(Payer, on_delete=models.CASCADE)
     INSURANCE_TYPE_CHOICES = [
         ('MEDICARE', "Medicare"),
         ('MEDICAID', 'Medicaid'),
