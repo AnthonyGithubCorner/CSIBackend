@@ -195,11 +195,12 @@ def payer_create(request):
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def patient_profile(request):
-    if request.user.is_authenticated():
-        patientToGet = Patient.objects.get(user=request.user)
-        serialized = json.dumps(patientToGet)
-        return Response(serialized, status=status.HTTP_201_CREATED)
-    return Response("User Not Authenticated", status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'GET':
+        if request.user.is_authenticated():
+            patientToGet = Patient.objects.get(user=request.user)
+            serialized = json.dumps(patientToGet)
+            return Response(serialized, status=status.HTTP_201_CREATED)
+        return Response("User Not Authenticated", status=status.HTTP_400_BAD_REQUEST)
 
 
 #gets closest hospitals

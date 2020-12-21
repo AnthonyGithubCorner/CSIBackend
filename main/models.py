@@ -51,9 +51,9 @@ class ModalityResource(models.Model):
 class Patient(models.Model):
     userTransferID=models.IntegerField(default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    ModalitiesWatched = models.ManyToManyField(ModalityResource, related_name="history+")
-    ModalitiesBookmarked = models.ManyToManyField(ModalityResource, related_name="bookmarked+")
-    corporationName = models.ForeignKey(Payer, on_delete=models.CASCADE)
+    ModalitiesWatched = models.ManyToManyField(ModalityResource, related_name="history+", null=True, blank=True)
+    ModalitiesBookmarked = models.ManyToManyField(ModalityResource, related_name="bookmarked+", null=True, blank=True)
+    corporationName = models.ForeignKey(Payer, on_delete=models.CASCADE, null=True, blank=True)
     SMOKING_CHOICES = [
         ('CURRENT', "Current Smoker"),
         ('FORMER', 'Former Smoker'),
