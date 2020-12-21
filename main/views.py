@@ -25,6 +25,7 @@ import django_filters.rest_framework
 from .models import ModalityResource
 from .serializers import ModalityResourceSerializer
 from django_filters import rest_framework as filters
+from django.core import serializers
 
 
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
@@ -61,13 +62,10 @@ class UserList(generics.ListCreateAPIView):
 def user_create(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            obj = serializer.save()
-            serialized = UserSerializer(obj)
-            if serialized.is_valid():
-                serialized.save()
-                return Response(serialized.validated_data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        obj = serializer.save()
+        userCreated = serializers.serialize('json', obj)
+        return Response(userCreated, status=status.HTTP_201_CREATED)
+    return Response("User Could Not Be Created", status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PUT', 'DELETE'])
