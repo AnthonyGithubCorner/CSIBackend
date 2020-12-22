@@ -26,6 +26,7 @@ from .models import ModalityResource
 from .serializers import ModalityResourceSerializer
 from django_filters import rest_framework as filters
 from django.core import serializers
+from django.forms.models import model_to_dict
 
 
 HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
@@ -64,8 +65,8 @@ def user_create(request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             obj = serializer.save()
-            userCreated = serializers.serialize('json', [User.objects.get(username=request.data['username'])])
-            return Response(userCreated, status=status.HTTP_201_CREATED)
+            dict_obj = model_to_dict( obj )
+            return Response(dict_obj, status=status.HTTP_201_CREATED)
         return Response("User Could Not Be Created", status=status.HTTP_400_BAD_REQUEST)
 
 
