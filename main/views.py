@@ -65,9 +65,7 @@ def user_create(request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             obj = serializer.save()
-            dict_obj = model_to_dict( obj )
-            jsonObj = json.dumps(dict_obj)
-            return Response(jsonObj, status=status.HTTP_201_CREATED)
+            return Response({'id':obj.pk}, status=status.HTTP_201_CREATED)
         return Response("User Could Not Be Created", status=status.HTTP_400_BAD_REQUEST)
 
 
