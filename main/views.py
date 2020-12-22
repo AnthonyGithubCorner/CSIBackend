@@ -27,30 +27,33 @@ from .serializers import ModalityResourceSerializer
 from django_filters import rest_framework as filters
 from django.core import serializers
 from django.forms.models import model_to_dict
+from django.core.serializers.json import DjangoJSONEncoder
+
+HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip(
+    "/")
 
 
-HOSPITAL_URL = 'https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Hospitals_1/FeatureServer/0/'.rstrip("/")
-
-#define's the type of request
+# define's the type of request
 @api_view(['POST'])
 def user_login(request):
-    #Serializes JSON
+    # Serializes JSON
     serializer = UserLoginSerializer(data=request.data)
-    #checks there is no problem
+    # checks there is no problem
     serializer.is_valid(raise_exception=True)
-    #response
+    # response
     response = {
-        'success' : 'True',
-        'status code' : status.HTTP_200_OK,
+        'success': 'True',
+        'status code': status.HTTP_200_OK,
         'message': 'User logged in  successfully',
-        #security token
-        'token' : serializer.data['token'],
-        }
+        # security token
+        'token': serializer.data['token'],
+    }
     status_code = status.HTTP_200_OK
 
     return Response(response, status=status_code)
 
-#https://www.django-rest-framework.org/api-guide/generic-views/#listcreateapiview
+
+# https://www.django-rest-framework.org/api-guide/generic-views/#listcreateapiview
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 class UserList(generics.ListCreateAPIView):
@@ -59,35 +62,36 @@ class UserList(generics.ListCreateAPIView):
     ordering_fields = ['username', 'email', 'id']
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 
+
 @api_view(['POST'])
 def user_create(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             obj = serializer.save()
-            return Response({'id':obj.pk}, status=status.HTTP_201_CREATED)
+            return Response({'id': obj.pk}, status=status.HTTP_201_CREATED)
         return Response("User Could Not Be Created", status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PUT', 'DELETE'])
 def users_detail(request, pk):
     try:
-        #gets user to change/delete
+        # gets user to change/delete
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    #change user
+    # change user
     if request.method == 'PUT':
-        #serialize request data to change user
+        # serialize request data to change user
         serializer = UserSerializer(user, data=request.data, context={'request': request})
         if serializer.is_valid():
-            #save this serializer as the old user
+            # save this serializer as the old user
             serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    #deletes user
+    # deletes user
     elif request.method == 'DELETE':
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -98,12 +102,12 @@ def users_detail(request, pk):
 @permission_classes([IsAuthenticated])
 def patient_detail(request, pk):
     try:
-        #gets patient to change/delete
+        # gets patient to change/delete
         patient = Patient.objects.get(pk=pk)
     except Patient.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    #change patient
+    # change patient
     if request.method == 'PUT':
         serializer = PatientSerializer(patient, data=request.data, context={'request': request})
         if serializer.is_valid():
@@ -111,12 +115,13 @@ def patient_detail(request, pk):
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    #delete patient
+    # delete patient
     elif request.method == 'DELETE':
         patient.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-#gives list mainly for debug purposes
+
+# gives list mainly for debug purposes
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 class PatientList(generics.ListCreateAPIView):
@@ -124,6 +129,7 @@ class PatientList(generics.ListCreateAPIView):
     serializer_class = PatientSerializer
     ordering_fields = ['age']
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
 
 @api_view(['POST'])
 def patient_create(request):
@@ -135,7 +141,7 @@ def patient_create(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-#gets resources
+# gets resources
 class ModalityResourceListCreate(generics.ListCreateAPIView):
     queryset = ModalityResource.objects.all()
     serializer_class = ModalityResourceSerializer
@@ -143,7 +149,7 @@ class ModalityResourceListCreate(generics.ListCreateAPIView):
     filterset_fields = ('publishDate', 'typeArticle')
 
 
-#filters resources
+# filters resources
 class ModalityResourceFilter(filters.FilterSet):
     class Meta:
         model = ModalityResource
@@ -155,12 +161,12 @@ class ModalityResourceFilter(filters.FilterSet):
 @permission_classes([IsAuthenticated])
 def payer_detail(request, pk):
     try:
-        #gets payer to change/delete
+        # gets payer to change/delete
         payer = Payer.objects.get(pk=pk)
     except Payer.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    #change payer
+    # change payer
     if request.method == 'PUT':
         serializer = PayerSerializer(payer, data=request.data, context={'request': request})
         if serializer.is_valid():
@@ -168,7 +174,7 @@ def payer_detail(request, pk):
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    #delete payer
+    # delete payer
     elif request.method == 'DELETE':
         payer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -193,6 +199,7 @@ def payer_create(request):
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
@@ -201,12 +208,13 @@ def patient_profile(request):
         if request.user.is_authenticated:
             patientToGet = Patient.objects.get(user=request.user)
             dict_obj = model_to_dict(patientToGet)
-            patientJson = json.dumps(dict_obj)
+            patientJson = json.dumps(dict_obj, sort_keys=True,
+                                     indent=1,
+                                     cls=DjangoJSONEncoder)
             return Response(patientJson, status=status.HTTP_201_CREATED)
         return Response("User Not Authenticated", status=status.HTTP_400_BAD_REQUEST)
 
-
-#gets closest hospitals
+# gets closest hospitals
 # @api_view(['GET'])
 # def closest(request, pk):
 #     patient = Patient.objects.get(pk=pk)
