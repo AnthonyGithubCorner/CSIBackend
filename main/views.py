@@ -200,8 +200,9 @@ def patient_profile(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             patientToGet = Patient.objects.get(user=request.user)
-            serialized = json.dumps(patientToGet)
-            return Response(serialized, status=status.HTTP_201_CREATED)
+            dict_obj = model_to_dict(patientToGet)
+            patientJson = json.dumps(dict_obj)
+            return Response(patientJson, status=status.HTTP_201_CREATED)
         return Response("User Not Authenticated", status=status.HTTP_400_BAD_REQUEST)
 
 
