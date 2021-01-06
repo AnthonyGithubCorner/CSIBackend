@@ -13,14 +13,16 @@ urlpatterns = [
     path('api/createusers/',  views.user_create),
     path('api/users/<int:pk>/', views.users_detail),
     # path('api/users/',  views.UserList.as_view()),
+
+    #patient Dashboard
     path('api/patients/', views.PatientList.as_view()),
     path('api/createpatients/', views.patient_create),
     path('api/patients/<int:pk>/', views.patient_detail),
     path('api/patientprofile/', views.patient_profile),
+    path('api/Modality/', views.ModalityResourceList.as_view()),
     path('token/obtain/', obtain_auth_token),
-    path('api/patients/', views.ModalityResourceListCreate.as_view()),
 
-    #payer dashboard
+    #payer Dashboard
     path('api/payers/', views.PayerListCreate.as_view()),
     path('api/createpayers/', views.payer_create)
 

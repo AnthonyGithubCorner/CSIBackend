@@ -141,8 +141,10 @@ def patient_create(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# gets resources
-class ModalityResourceListCreate(generics.ListCreateAPIView):
+
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+class ModalityResourceList(generics.ListCreateAPIView):
     queryset = ModalityResource.objects.all()
     serializer_class = ModalityResourceSerializer
     filter_backends = (filters.DjangoFilterBackend,)
@@ -207,11 +209,7 @@ def patient_profile(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             patientToGet = Patient.objects.get(user=request.user)
-            dict_obj = model_to_dict(patientToGet)
-            patientJson = json.dumps(dict_obj, sort_keys=True,
-                                     indent=1,
-                                     cls=DjangoJSONEncoder)
-            return Response(patientJson, status=status.HTTP_201_CREATED)
+            return Response({"age": patientToGet.age}, status=status.HTTP_201_CREATED)
         return Response("User Not Authenticated", status=status.HTTP_400_BAD_REQUEST)
 
 # gets closest hospitals
