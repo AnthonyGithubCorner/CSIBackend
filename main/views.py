@@ -209,7 +209,7 @@ def patient_profile(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             patientToGet = Patient.objects.get(user=request.user)
-            return Response({"age": patientToGet.age}, status=status.HTTP_201_CREATED)
+            return Response({"age": patientToGet.age, "email": patientToGet.email, "firstName": patientToGet.firstName, "lastName": patientToGet.lastName, "date": patientToGet.dateEnrolled}, status=status.HTTP_201_CREATED)
         return Response("User Not Authenticated", status=status.HTTP_400_BAD_REQUEST)
 
 # gets closest hospitals
